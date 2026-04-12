@@ -1,0 +1,8 @@
+Servidores 8-10
+Computadoras de escritorio (En uso, no en uso) 7-9
+Laptops (En uso, no en uso) 7-9
+Aire Acondicionado 5-8
+Grabadoras 4-7
+Camaras 3-6
+
+Si un objeto no esta en uso, su criticidad se baja 5 puntos (ya que pues... no se esta usando)

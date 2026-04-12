@@ -1,8 +1,16 @@
 #include <iostream>
+#include "Equipo.h"
+#include "Servidores.h"
 using namespace std;
 int main() {
-    std::cout << "Hello, World!" << std::endl;
-    cout<<"h"<<endl;
-    cout<<"Fernanda y jurnier se aman"<<endl;
+    try {
+        Servidores servidor1("Servidor1", 5, 10, 8, true);
+        servidor1.setUso(false);
+        cout << servidor1.toString() << endl;
+    }catch (const invalid_argument& e) {
+        cerr << "Error: " << e.what() << endl;
+    }
+
+
     return 0;
 }
