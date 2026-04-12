@@ -40,6 +40,17 @@ float Equipo::prioridad() {
         return ((float)incidenciasActivas * 0.3) + ((float)tiempoInactivo * 0.2) + ((float)(criticidad<0 ? 0 : criticidad) * 0.5);
 }
 
+int Equipo::getId() {
+        return id;
+}
+
+void Equipo::setId(int id) {
+    if (id < 0) {
+        throw invalid_argument("El ID no puede ser negativo");
+    }
+    this->id = id;
+}
+
 string Equipo::getNombre() {
         return string(nombre);
 }

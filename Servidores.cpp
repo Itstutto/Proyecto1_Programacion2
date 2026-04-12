@@ -26,6 +26,7 @@ Servidores::Servidores(string const &nombre, int incidenciasActivas, int tiempoI
 
 string Servidores::toString() {
     stringstream ss;
+    ss << "ID: " << getId() << endl;
     ss << "Servidor: " << getNombre() << endl;
     ss << "Incidencias Activas: " << getIncidenciasActivas() << endl;
     ss << "Tiempo Inactivo: " << getTiempoInactivo() << " horas" << endl;

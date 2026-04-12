@@ -11,6 +11,7 @@ using namespace std;
 
 class Equipo {
 protected:
+    int id;
     char nombre[50];
     int incidenciasActivas;
     //Tiempo inactivo en horas
@@ -24,12 +25,14 @@ public:
 
     float prioridad();
 
+    int getId();
     string getNombre();
     int getIncidenciasActivas();
     int getTiempoInactivo();
     int getCriticidad();
     bool getUso();
 
+    void setId(int id);
     void setNombre(string const &nombre);
     void setIncidenciasActivas(int incidencias);
     void setTiempoInactivo(int tiempoInactivo);

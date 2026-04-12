@@ -7,4 +7,11 @@ add_executable(Proyecto1 main.cpp
         Equipo.cpp
         Equipo.h
         Servidores.cpp
-        Servidores.h)
+        Servidores.h
+        ContenedorEquipos.cpp
+        ContenedorEquipos.h
+        ErrorEspacio.cpp
+        ErrorEspacio.h
+        Error.cpp
+        Error.h
+        ErrorNoEncontrado.h)
