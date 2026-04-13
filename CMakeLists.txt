@@ -14,4 +14,6 @@ add_executable(Proyecto1 main.cpp
         ErrorEspacio.h
         Error.cpp
         Error.h
-        ErrorNoEncontrado.h)
+        ErrorNoEncontrado.h
+        ErrorRepetido.cpp
+        ErrorRepetido.h)

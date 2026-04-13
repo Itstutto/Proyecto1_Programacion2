@@ -8,7 +8,7 @@
 Servidores::Servidores() : Equipo() {
 }
 
-Servidores::Servidores(string const &nombre, int incidenciasActivas, int tiempoInactivo, int criticidad, bool enUso) : Equipo(nombre, incidenciasActivas, tiempoInactivo, criticidad, enUso){
+Servidores::Servidores(int id, string const &nombre, int incidenciasActivas, int tiempoInactivo, int criticidad, bool enUso) : Equipo(id, nombre, incidenciasActivas, tiempoInactivo, criticidad, enUso){
 
     //Si la criticidad no está entre 8 y 10, ajustarla (si es menor a 8 ponerla en 8, si es mayor a 10 ponerla en 10)
     if (criticidad < 8) {
@@ -37,6 +37,6 @@ string Servidores::toString() {
 
 string Servidores::serializar() {
     stringstream ss;
-    ss << "Servidor," << getNombre() << "," << getIncidenciasActivas() << "," << getTiempoInactivo() << "," << getCriticidad() << "," << enUso;
+    ss << id<<",Servidor," << getNombre() << "," << getIncidenciasActivas() << "," << getTiempoInactivo() << "," << getCriticidad() << "," << enUso;
     return ss.str();
 }

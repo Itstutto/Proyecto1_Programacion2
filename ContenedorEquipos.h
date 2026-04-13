@@ -23,7 +23,7 @@ public:
     Equipo* buscarEquipo(int id);
     string mostrarEquipos();
     string serializar();
-
+    void ordenarPorPrioridad();
 };
 
 

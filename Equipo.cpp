@@ -7,6 +7,7 @@
 #include <cstring>
 
 Equipo::Equipo() {
+    id = 0;
     nombre[0] =  ' ';
     incidenciasActivas = 0;
     tiempoInactivo = 0;
@@ -14,7 +15,11 @@ Equipo::Equipo() {
     enUso = false;
 }
 
-Equipo::Equipo(string const &nombre, int incidenciasActivas, int tiempoInactivo, int criticidad, bool enUso) {
+Equipo::Equipo(int id, string const &nombre, int incidenciasActivas, int tiempoInactivo, int criticidad, bool enUso) {
+    if (id < 0) {
+        throw invalid_argument("El ID no puede ser negativo");
+    }
+    this->id = id;
     if (nombre.length() >= sizeof(this->nombre)) {
        throw invalid_argument("El nombre del equipo es demasiado largo");
     }

@@ -5,6 +5,7 @@
 #include "ContenedorEquipos.h"
 
 #include "ErrorNoEncontrado.h"
+#include "ErrorRepetido.h"
 
 ContenedorEquipos::ContenedorEquipos() {
     tam=100;
@@ -27,6 +28,12 @@ ContenedorEquipos::~ContenedorEquipos() {
 void ContenedorEquipos::agregarEquipo(Equipo *equipo) {
         if (cant >= tam) {
             throw ErrorEspacio("El contenedor de equipos está lleno");
+        }
+        try {
+            buscarEquipo(equipo->getId());
+            throw ErrorRepetido("Ya existe un equipo con el ID proporcionado");
+        } catch (const ErrorNoEncontrado& e) {
+            //Si no se encuentra el equipo, se puede agregar
         }
         equipos[cant++] = equipo;
 
@@ -56,7 +63,6 @@ Equipo * ContenedorEquipos::buscarEquipo(int id) {
         }
     }
      throw ErrorNoEncontrado("No se encontró un equipo con el ID proporcionado");
-
 }
 
 string ContenedorEquipos::mostrarEquipos() {
@@ -76,4 +82,18 @@ string ContenedorEquipos::serializar() {
         ss << equipos[i]->serializar() << endl;
     }
     return ss.str();
+}
+
+void ContenedorEquipos::ordenarPorPrioridad() {
+    // sin swap
+    Equipo* temp = nullptr;
+    for (int i = 0; i < cant - 1; i++) {
+        for (int j = 0; j < cant - i - 1; j++) {
+            if (equipos[j]->prioridad() < equipos[j + 1]->prioridad()) {
+                temp = equipos[j];
+                equipos[j] = equipos[j + 1];
+                equipos[j + 1] = temp;
+            }
+        }
+    }
 }

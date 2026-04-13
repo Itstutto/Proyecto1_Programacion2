@@ -20,7 +20,7 @@ protected:
     bool enUso;
 public:
     Equipo();
-    Equipo(string const &nombre, int incidenciasActivas = 0, int tiempoInactivo = 0, int criticidad = 0, bool enUso = false);
+    Equipo(int id,string const &nombre, int incidenciasActivas = 0, int tiempoInactivo = 0, int criticidad = 0, bool enUso = false);
     virtual ~Equipo() = default;
 
     float prioridad();

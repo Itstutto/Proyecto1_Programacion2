@@ -20,7 +20,7 @@ using namespace std;
 class Servidores : public Equipo {
 public:
     Servidores();
-    Servidores(string const &nombre, int incidenciasActivas = 0, int tiempoInactivo = 0, int criticidad = 0, bool enUso = false);
+    Servidores(int id, string const &nombre, int incidenciasActivas = 0, int tiempoInactivo = 0, int criticidad = 0, bool enUso = false);
     ~Servidores() override = default;
 
     string toString() override;
