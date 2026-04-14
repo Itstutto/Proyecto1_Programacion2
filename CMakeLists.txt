@@ -22,4 +22,8 @@ add_executable(Proyecto1 main.cpp
         Laptops.cpp
         Laptops.h
         AireAcondicionado.cpp
-        AireAcondicionado.h)
+        AireAcondicionado.h
+        Grabadoras.cpp
+        Grabadoras.h
+        Camaras.cpp
+        Camaras.h)
