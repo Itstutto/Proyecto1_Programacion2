@@ -16,4 +16,10 @@ add_executable(Proyecto1 main.cpp
         Error.h
         ErrorNoEncontrado.h
         ErrorRepetido.cpp
-        ErrorRepetido.h)
+        ErrorRepetido.h
+        ComputadorasEscritorio.cpp
+        ComputadorasEscritorio.h
+        Laptops.cpp
+        Laptops.h
+        AireAcondicionado.cpp
+        AireAcondicionado.h)

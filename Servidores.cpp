@@ -37,6 +37,6 @@ string Servidores::toString() {
 
 string Servidores::serializar() {
     stringstream ss;
-    ss << id<<",Servidor," << getNombre() << "," << getIncidenciasActivas() << "," << getTiempoInactivo() << "," << getCriticidad() << "," << enUso;
+    ss << id<<",Servidor," << getNombre() << "," << getIncidenciasActivas() << "," << getTiempoInactivo() << "," << getCriticidad() << "," << enUso<<endl;
     return ss.str();
 }
