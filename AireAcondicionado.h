@@ -19,7 +19,7 @@ using namespace std;
  * Prioridad = (Incidencias Activas * 0.3) + (Tiempo Inactivo * 0.2) + (Criticidad * 0.5)
  * AireAcondicionado criticidad: 5-8;
  */
-class AireAcondicionado : Equipo {
+class AireAcondicionado : public Equipo {
 public:
     AireAcondicionado();
     AireAcondicionado(int id, string const &nombre, int incidenciasActivas=0, int tiempoInactivo=0, int criticidad=0, bool enUso=false);

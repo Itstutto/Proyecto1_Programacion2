@@ -29,7 +29,7 @@ int main() {
         contenedor.agregarEquipo(servidor3);
         contenedor.agregarEquipo(compuE1);
         contenedor.agregarEquipo(laptop1);
-        //contenedor.agregarEquipo(aire1);
+        contenedor.agregarEquipo(aire1);
         contenedor.agregarEquipo(grabadora1);
         contenedor.agregarEquipo(camara1);
 

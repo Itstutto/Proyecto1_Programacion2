@@ -25,7 +25,7 @@ Equipo(id, nombre, incidenciasActivas, tiempoInactivo, criticidad, enUso) {
 string Camaras::toString() {
     stringstream ss;
     ss<< "ID: " << getId() << endl;
-    ss << "Cámara: " << getNombre() << endl;
+    ss << "Camara: " << getNombre() << endl;
     ss << "Incidencias Activas: " << getIncidenciasActivas() << endl;
     ss << "Tiempo Inactivo: " << getTiempoInactivo() << " horas" << endl;
     ss << "Criticidad: " << getCriticidad() << endl;
