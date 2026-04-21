@@ -18,6 +18,10 @@ protected:
     int tiempoInactivo;
     int criticidad;
     bool enUso;
+    //si el equipo esta siendo utilizado, si es false no aumenta tiempo inactivo y se baja criticidad
+    //(es menos critico en una oficina un equipo que no se usa)
+    bool danado;
+    //si el equipo esta danado, aumenta tiempo inactivo , no se modifica criticidad
 public:
     Equipo();
     Equipo(int id,string const &nombre, int incidenciasActivas = 0, int tiempoInactivo = 0, int criticidad = 0, bool enUso = false);
@@ -31,11 +35,17 @@ public:
     int getTiempoInactivo();
     int getCriticidad();
     bool getUso();
+    bool getDanado();
 
     void setId(int id);
     void setNombre(string const &nombre);
-    void setIncidenciasActivas(int incidencias);
-    void setTiempoInactivo(int tiempoInactivo);
+
+    void agregarIncidencia();
+    void eliminarIncidencia();
+
+    void agregarTiempoInactivo();
+    void eliminarTiempoInactivo();
+
     void setCriticidad(int criticidad);
     void setUso(bool enUso);
 

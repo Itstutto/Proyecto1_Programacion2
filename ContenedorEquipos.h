@@ -5,6 +5,7 @@
 #ifndef PROYECTO1_CONTENEDOREQUIPOS_H
 #define PROYECTO1_CONTENEDOREQUIPOS_H
 #include "ErrorEspacio.h"
+#include "ErrorNoEncontrado.h"
 #include "Equipo.h"
 #include <iostream>
 #include <sstream>
@@ -18,13 +19,19 @@ public:
     ContenedorEquipos();
     ~ContenedorEquipos();
 
+    int getCant();
+
     void agregarEquipo(Equipo* equipo);
     void eliminarEquipo(int id);
     Equipo* buscarEquipo(int id);
+    Equipo* buscarEquipoIndice(int indice);
     string mostrarEquipos();
     string serializar();
     void ordenarPorPrioridad();
+    void aumentarInactividad();
+
 };
+
 
 
 #endif //PROYECTO1_CONTENEDOREQUIPOS_H

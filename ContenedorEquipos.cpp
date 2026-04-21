@@ -5,6 +5,7 @@
 #include "ContenedorEquipos.h"
 
 #include "ErrorNoEncontrado.h"
+#include "ErrorPunteroNulo.h"
 #include "ErrorRepetido.h"
 
 ContenedorEquipos::ContenedorEquipos() {
@@ -23,6 +24,10 @@ ContenedorEquipos::~ContenedorEquipos() {
     }
     delete[] equipos;
     equipos = nullptr;
+}
+
+int ContenedorEquipos::getCant() {
+    return cant;
 }
 
 void ContenedorEquipos::agregarEquipo(Equipo *equipo) {
@@ -65,6 +70,16 @@ Equipo * ContenedorEquipos::buscarEquipo(int id) {
      throw ErrorNoEncontrado("No se encontró un equipo con el ID proporcionado");
 }
 
+Equipo * ContenedorEquipos::buscarEquipoIndice(int indice) {
+    if (indice < 0 || indice >= cant) {
+        throw ErrorNoEncontrado("Índice fuera de rango");
+    }
+    if (!equipos[indice]) {
+        throw ErrorPunteroNulo("No se encontró un equipo en el índice proporcionado");
+    }
+    return equipos[indice];
+}
+
 string ContenedorEquipos::mostrarEquipos() {
     stringstream ss;
     for (int i = 0; i < cant; i++) {
@@ -94,6 +109,14 @@ void ContenedorEquipos::ordenarPorPrioridad() {
                 equipos[j] = equipos[j + 1];
                 equipos[j + 1] = temp;
             }
+        }
+    }
+}
+
+void ContenedorEquipos::aumentarInactividad() {
+    for (int i = 0; i < cant; i++) {
+        if (equipos[i]->getDanado()) {
+            equipos[i]->agregarTiempoInactivo();
         }
     }
 }

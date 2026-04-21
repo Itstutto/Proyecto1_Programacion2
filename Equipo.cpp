@@ -6,6 +6,8 @@
 
 #include <cstring>
 
+#include "ErrorContradiccion.h"
+
 Equipo::Equipo() {
     id = 0;
     nombre[0] =  ' ';
@@ -13,6 +15,7 @@ Equipo::Equipo() {
     tiempoInactivo = 0;
     criticidad = 0;
     enUso = false;
+    danado = false;
 }
 
 Equipo::Equipo(int id, string const &nombre, int incidenciasActivas, int tiempoInactivo, int criticidad, bool enUso) {
@@ -38,6 +41,7 @@ Equipo::Equipo(int id, string const &nombre, int incidenciasActivas, int tiempoI
     this->criticidad = criticidad;
 
     this->enUso = enUso;
+    danado = false;
 }
 
 float Equipo::prioridad() {
@@ -69,11 +73,15 @@ int Equipo::getTiempoInactivo() {
 }
 
 int Equipo::getCriticidad() {
-    return criticidad;
+    return (criticidad < 0 ? 0 : criticidad);
 }
 
 bool Equipo::getUso() {
     return enUso;
+}
+
+bool Equipo::getDanado() {
+    return danado;
 }
 
 void Equipo::setNombre(string const &nombre) {
@@ -83,19 +91,38 @@ void Equipo::setNombre(string const &nombre) {
     strncpy(this->nombre, nombre.c_str(), sizeof(this->nombre) - 1);
 }
 
-void Equipo::setIncidenciasActivas(int incidenciasActivas) {
-    if (incidenciasActivas < 0) {
-        throw invalid_argument("El número de incidencias activas no puede ser negativo");
+void Equipo::agregarIncidencia() {
+    incidenciasActivas++;
+    if (incidenciasActivas > 3) {
+        danado = true;
     }
-    this->incidenciasActivas = incidenciasActivas;
 }
 
-void Equipo::setTiempoInactivo(int tiempoInactivo) {
-    if (tiempoInactivo < 0) {
-        throw invalid_argument("El tiempo inactivo no puede ser negativo");
+void Equipo::eliminarIncidencia() {
+    if (incidenciasActivas > 0) {
+        incidenciasActivas--;
     }
-    this->tiempoInactivo = tiempoInactivo;
+     if (incidenciasActivas <= 4) {
+        danado = false;
+        eliminarTiempoInactivo();
+    }
 }
+
+void Equipo::agregarTiempoInactivo() {
+    if (!danado) {
+        throw ErrorContradiccion("No se puede agregar tiempo inactivo a un equipo que no esta dañado");
+    }
+    tiempoInactivo+=24;
+}
+
+void Equipo::eliminarTiempoInactivo() {
+    if (danado) {
+        throw ErrorContradiccion("No se puede eliminar tiempo inactivo a un equipo que esta dañado");
+    }
+    tiempoInactivo = 0;
+}
+
+
 
 void Equipo::setCriticidad(int criticidad) {
     if (criticidad < 0) {

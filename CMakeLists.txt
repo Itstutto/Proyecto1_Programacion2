@@ -26,4 +26,12 @@ add_executable(Proyecto1 main.cpp
         Grabadoras.cpp
         Grabadoras.h
         Camaras.cpp
-        Camaras.h)
+        Camaras.h
+        Incidencias.cpp
+        Incidencias.h
+        ErrorPunteroNulo.cpp
+        ErrorPunteroNulo.h
+        ErrorArgumentoInvalido.cpp
+        ErrorArgumentoInvalido.h
+        ErrorContradiccion.cpp
+        ErrorContradiccion.h)
