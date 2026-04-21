@@ -34,4 +34,6 @@ add_executable(Proyecto1 main.cpp
         ErrorArgumentoInvalido.cpp
         ErrorArgumentoInvalido.h
         ErrorContradiccion.cpp
-        ErrorContradiccion.h)
+        ErrorContradiccion.h
+        PersonaMantenimiento.cpp
+        PersonaMantenimiento.h)
