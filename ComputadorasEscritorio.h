@@ -21,7 +21,7 @@ using namespace std;
 class ComputadorasEscritorio: public Equipo {
 public:
     ComputadorasEscritorio();
-    ComputadorasEscritorio(int id, string const &nombre, int incidenciasActivas=0, int tiempoInactivo=0, int criticidad=0, bool enUso=false);
+    ComputadorasEscritorio(int id, string const &nombre, int criticidad = 0, bool enUso = false, int incidenciasActivas = 0, int tiempoInactivo = 0);
     ~ComputadorasEscritorio() override = default;
 
     string toString() override;

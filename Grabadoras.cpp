@@ -7,8 +7,7 @@
 Grabadoras::Grabadoras(): Equipo() {
 }
 
-Grabadoras::Grabadoras(int id, string const &nombre, int incidenciasActivas, int tiempoInactivo, int criticidad,
-    bool enUso): Equipo(id, nombre, incidenciasActivas, tiempoInactivo, criticidad, enUso) {
+Grabadoras::Grabadoras(int id, string const &nombre, int criticidad, bool enUso, int incidenciasActivas, int tiempoInactivo): Equipo(id, nombre, incidenciasActivas, tiempoInactivo, criticidad, enUso) {
     //Si la criticidad no está entre 4 y 7, ajustarla (si es menor a 4 ponerla en 4, si es mayor a 7 ponerla en 7
     if (criticidad <4) {
         this->criticidad = 4;

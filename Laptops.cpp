@@ -7,7 +7,7 @@
 Laptops::Laptops(): Equipo() {
 }
 
-Laptops::Laptops(int id, string const &nombre, int incidenciasActivas, int tiempoInactivo, int criticidad, bool enUso): Equipo(id, nombre, incidenciasActivas, tiempoInactivo, criticidad, enUso) {
+Laptops::Laptops(int id, string const &nombre, int criticidad, bool enUso, int incidenciasActivas, int tiempoInactivo): Equipo(id, nombre, incidenciasActivas, tiempoInactivo, criticidad, enUso) {
     //Si la criticidad no está entre 6 y 9, ajustarla (si es menor a 6 ponerla en 6, si es mayor a 9 ponerla en 9
     if (criticidad <6) {
         this->criticidad = 6;

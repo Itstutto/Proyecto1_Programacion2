@@ -20,7 +20,7 @@ using namespace std;
 class Grabadoras :public Equipo {
 public:
     Grabadoras();
-    Grabadoras(int id, string const &nombre, int incidenciasActivas=0, int tiempoInactivo=0, int criticidad=0, bool enUso=false);
+    Grabadoras(int id, string const &nombre, int criticidad = 0, bool enUso = false, int incidenciasActivas = 0, int tiempoInactivo = 0);
     ~Grabadoras() override = default;
 
     string toString() override;

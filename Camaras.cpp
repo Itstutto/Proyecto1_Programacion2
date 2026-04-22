@@ -7,8 +7,7 @@
 Camaras::Camaras(): Equipo() {
 }
 
-Camaras::Camaras(int id, string const &nombre, int incidenciasActivas, int tiempoInactivo, int criticidad, bool enUso):
-Equipo(id, nombre, incidenciasActivas, tiempoInactivo, criticidad, enUso) {
+Camaras::Camaras(int id, string const &nombre, int criticidad, bool enUso, int incidenciasActivas, int tiempoInactivo): Equipo(id, nombre, incidenciasActivas, tiempoInactivo, criticidad, enUso) {
     //Si la criticidad no está entre 3 y 6, ajustarla (si es menor a 3 ponerla en 3, si es mayor a 6 ponerla en 6
     if (criticidad <3) {
         this->criticidad = 3;

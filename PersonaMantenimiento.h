@@ -6,6 +6,7 @@
 #define PROYECTO1_PERSONAMANTENIMIENTO_H
 #include<iostream>
 #include<string>
+#include <sstream>
 using namespace std;
 
 class PersonaMantenimiento {
@@ -18,6 +19,8 @@ public:
 
     string getNombre();
     string getId();
+    string toString();
+    string serializar();
 
     void setNombre(string nombre); //por si acaso, aunque me parece que no son necesarios
     void setId(string id);

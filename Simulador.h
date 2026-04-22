@@ -15,7 +15,7 @@ private:
     int diasSimulacion;
     ContenedorEquipos* contenedor;
     Incidencias* incidencias;
-    string reporte;
+    string *reporte;
 
 public:
     Simulador(int diasSimulacion = 31, int totalIncidencias = 100, double sensibilidad = 0.7);

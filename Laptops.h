@@ -21,7 +21,7 @@ using namespace std;
 class Laptops: public Equipo {
 public:
     Laptops();
-    Laptops(int id, string const &nombre, int incidenciasActivas=0, int tiempoInactivo=0, int criticidad=0, bool enUso=false);
+    Laptops(int id, string const &nombre, int criticidad = 0, bool enUso = false, int incidenciasActivas = 0, int tiempoInactivo = 0);
     ~Laptops() override = default;
 
     string toString() override;

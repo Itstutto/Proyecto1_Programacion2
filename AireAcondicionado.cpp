@@ -7,8 +7,7 @@
 AireAcondicionado::AireAcondicionado(): Equipo() {
 }
 
-AireAcondicionado::AireAcondicionado(int id, string const &nombre, int incidenciasActivas, int tiempoInactivo,
-    int criticidad, bool enUso): Equipo(id, nombre, incidenciasActivas, tiempoInactivo, criticidad, enUso) {
+AireAcondicionado::AireAcondicionado(int id, string const &nombre, int criticidad, bool enUso, int incidenciasActivas, int tiempoInactivo): Equipo(id, nombre, incidenciasActivas, tiempoInactivo, criticidad, enUso) {
     //Si la criticidad no está entre 5 y 8, ajustarla (si es menor a 5 ponerla en 5, si es mayor a 8 ponerla en 8
     if (criticidad <5) {
         this->criticidad = 5;

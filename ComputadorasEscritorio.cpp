@@ -7,8 +7,7 @@
 ComputadorasEscritorio::ComputadorasEscritorio(): Equipo() {
 }
 
-ComputadorasEscritorio::ComputadorasEscritorio(int id, string const &nombre, int incidenciasActivas, int tiempoInactivo,
-    int criticidad, bool enUso) : Equipo(id, nombre, incidenciasActivas, tiempoInactivo, criticidad, enUso) {
+ComputadorasEscritorio::ComputadorasEscritorio(int id, string const &nombre, int criticidad, bool enUso, int incidenciasActivas, int tiempoInactivo) : Equipo(id, nombre, incidenciasActivas, tiempoInactivo, criticidad, enUso) {
         //Si la criticidad no está entre 7 y 9, ajustarla (si es menor a 7 ponerla en 7, si es mayor a 9 ponerla en 9
     if (criticidad <7) {
         this->criticidad = 7;
