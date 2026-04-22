@@ -6,6 +6,7 @@
 #define PROYECTO1_INCIDENCIAS_H
 #include <iostream>
 #include <sstream>
+#include "IReporteDelDia.h"
 #include <random>
 
 #include "ContenedorEquipos.h"
@@ -13,7 +14,7 @@
 using namespace std;
 
 
-class Incidencias {
+class Incidencias : public IReporteDelDia{
 private:
     int incidencias; //incidencias que se van asignando
     int incidenciasRestantes; //inicia en la cantidad total de incidencias, a medida que se asignan, va disminuyendo
@@ -39,7 +40,7 @@ public:
     int getIncidenciasRestantes();
 
 
-    string getReporte();
+    string generarReporte() override;
 
 
 

@@ -11,10 +11,12 @@
 #include "Grabadoras.h"
 #include "Camaras.h"
 #include "Incidencias.h"
+#include "Simulador.h"
 using namespace std;
 
 int main() {
-    ContenedorEquipos contenedor;
+    Simulador sim(30, 50, 1);
+
     try {
         Servidores* servidor1 = new Servidores(2,"Servidor1", 0, 0, 8, true);
         servidor1->setUso(false);
@@ -27,14 +29,14 @@ int main() {
         Camaras* camara1 = new Camaras(8,"Camara1", 0, 0, 2, true);
 
 
-        contenedor.agregarEquipo(servidor1);
-        contenedor.agregarEquipo(servidor2);
-        contenedor.agregarEquipo(servidor3);
-        contenedor.agregarEquipo(compuE1);
-        contenedor.agregarEquipo(laptop1);
-        contenedor.agregarEquipo(aire1);
-        contenedor.agregarEquipo(grabadora1);
-        contenedor.agregarEquipo(camara1);
+        sim.agregarEquipo(servidor1);
+        sim.agregarEquipo(servidor2);
+        sim.agregarEquipo(servidor3);
+        sim.agregarEquipo(compuE1);
+        sim.agregarEquipo(laptop1);
+        sim.agregarEquipo(aire1);
+        sim.agregarEquipo(grabadora1);
+        sim.agregarEquipo(camara1);
 
 
     }catch (const exception& e) {
@@ -42,18 +44,8 @@ int main() {
     }
 
 
+    sim.ejecutarSimulacion();
+    cout<<sim.generarReporte()<<endl;
 
-    Incidencias in(20,10,0.3);
-
-    for (int i=0; i<10; i++) {
-        in.asignarIncidencias(&contenedor);
-        contenedor.aumentarInactividad();
-
-    }
-
-    cout<<in.getReporte()<<endl;
-
-    contenedor.ordenarPorPrioridad();
-    cout<<contenedor.mostrarEquipos()<<endl;
     return 0;
 }

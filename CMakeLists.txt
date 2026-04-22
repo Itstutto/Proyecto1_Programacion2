@@ -36,4 +36,8 @@ add_executable(Proyecto1 main.cpp
         ErrorContradiccion.cpp
         ErrorContradiccion.h
         PersonaMantenimiento.cpp
-        PersonaMantenimiento.h)
+        PersonaMantenimiento.h
+        Simulador.cpp
+        Simulador.h
+        IReporteDelDia.cpp
+        IReporteDelDia.h)

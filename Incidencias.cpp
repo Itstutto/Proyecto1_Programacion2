@@ -55,7 +55,6 @@ void Incidencias::asignarIncidencias(ContenedorEquipos* contenedor) {
     mt19937 gen(rd());
     uniform_int_distribution<> cant(0, contenedor->getCant()-1);
     stringstream s;
-    s<<"Reporte del dia: "<<diasCompletados<<endl;
 
     int dispositivo;
     int cantidadDeIncidencias = calculoIncidencias();
@@ -72,6 +71,12 @@ void Incidencias::asignarIncidencias(ContenedorEquipos* contenedor) {
             continue;
         }
     }
+    if (incidenciasRestantes == 0) {
+        s<<"Todas las incidencias han sido asignadas"<<endl
+        <<"---------------------------------------------"<<endl;
+        reporte = s.str();
+        return;
+    }
 
     s<<"Cantidad de incidencias asignadas: "<<cantidadDeIncidencias<<endl
     <<"Cantidad de incidencias restantes: "<<incidenciasRestantes-cantidadDeIncidencias<<endl
@@ -79,7 +84,7 @@ void Incidencias::asignarIncidencias(ContenedorEquipos* contenedor) {
     incidenciasRestantes -= cantidadDeIncidencias;
     incidencias += cantidadDeIncidencias;
     diasCompletados++;
-    reporte += s.str();
+    reporte = s.str();
 
 
 
@@ -93,6 +98,8 @@ int Incidencias::getIncidenciasRestantes() {
     return incidenciasRestantes;
 }
 
-string Incidencias::getReporte() {
+string Incidencias::generarReporte() {
     return reporte;
 }
+
+
