@@ -99,6 +99,12 @@ string ContenedorEquipos::serializar() {
     return ss.str();
 }
 
+void ContenedorEquipos::agregarDiaReporte() {
+    for (int i = 0; i < cant; i++) {
+        equipos[i]->agregarDiaReporte();
+    }
+}
+
 void ContenedorEquipos::ordenarPorPrioridad() {
     // sin swap
     Equipo* temp = nullptr;
@@ -117,6 +123,20 @@ void ContenedorEquipos::aumentarInactividad() {
     for (int i = 0; i < cant; i++) {
         if (equipos[i]->getDanado()) {
             equipos[i]->agregarTiempoInactivo();
+        }
+    }
+}
+
+void ContenedorEquipos::ordernarPorId()  {
+    // sin swap
+    Equipo* temp = nullptr;
+    for (int i = 0; i < cant - 1; i++) {
+        for (int j = 0; j < cant - i - 1; j++) {
+            if (equipos[j]->getId() > equipos[j + 1]->getId()) {
+                temp = equipos[j];
+                equipos[j] = equipos[j + 1];
+                equipos[j + 1] = temp;
+            }
         }
     }
 }

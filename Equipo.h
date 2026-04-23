@@ -6,10 +6,12 @@
 #define PROYECTO1_EQUIPO_H
 
 #include <iostream>
+#include "IReporteDelDia.h"
 #include <string>
+#include <sstream>
 using namespace std;
 
-class Equipo {
+class Equipo : public IReporteDelDia{
 protected:
     int id;
     char nombre[50];
@@ -22,6 +24,9 @@ protected:
     //(es menos critico en una oficina un equipo que no se usa)
     bool danado;
     //si el equipo esta danado, aumenta tiempo inactivo , no se modifica criticidad
+
+    string *reporte;
+    int diasReporte;
 public:
     Equipo();
     Equipo(int id,string const &nombre, int incidenciasActivas = 0, int tiempoInactivo = 0, int criticidad = 0, bool enUso = false);
@@ -41,16 +46,20 @@ public:
     void setNombre(string const &nombre);
 
     void agregarIncidencia();
-    void eliminarIncidencia();
+    void reparar();
 
     void agregarTiempoInactivo();
     void eliminarTiempoInactivo();
+
+    void agregarDiaReporte();
 
     void setCriticidad(int criticidad);
     void setUso(bool enUso);
 
     virtual  string toString() = 0;
     virtual string serializar() = 0;
+
+    string generarReporte() override;
 };
 
 

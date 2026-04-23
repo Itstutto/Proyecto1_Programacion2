@@ -18,3 +18,13 @@ Los errores se manejan de la siguiente manera:
  - Etc
 
 
+Nota: Agregar en simulacion un menu para que al final de la simulacion se puedan generar reportes de los objetos, por ejemplo, cuantos objetos se usaron, cuantos no se usaron, etc. Esto es para que el usuario pueda ver un resumen de la simulacion y entender mejor los resultados.
+
+-Reporte total  
+-Reporte de cada equipo
+
+al entrar a cada menu  
+-mostrar reporte en consola  
+-crear archivo de texto con el reporte  
+
+Hay que revisar bien el calculo de la criticidad, ya que no se esta reparando equipos que no esten en uso, eso no es realista, ya que en la vida real, aunque un equipo no este en uso, si se le da mantenimiento para que este listo para cuando se necesite. Por lo tanto, se debe revisar el calculo de la criticidad para que sea mas realista.

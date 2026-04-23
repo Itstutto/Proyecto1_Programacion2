@@ -36,7 +36,6 @@ int Incidencias::calculoIncidencias() {
     random_device rd;
     mt19937 gen(rd());
     uniform_real_distribution<> cant(posibilidad ,100);
-    cout<<"Posibilidad de incidencia: "<<posibilidad<<"%"<<endl;
     double cantidadAsignada = 0; //cantidad a asignar, no se eliminan de restantes hasta que asignarIncidencias() las asignas
 
     for (int i=0; i<incidenciasRestantes; i++) {

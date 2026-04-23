@@ -27,8 +27,13 @@ public:
     Equipo* buscarEquipoIndice(int indice);
     string mostrarEquipos();
     string serializar();
+
+    void agregarDiaReporte();
+
     void ordenarPorPrioridad();
     void aumentarInactividad();
+
+    void ordernarPorId();
 
 };
 

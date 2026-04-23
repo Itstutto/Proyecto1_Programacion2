@@ -6,6 +6,7 @@
 #define PROYECTO1_SIMULADOR_H
 #include "ContenedorEquipos.h"
 #include "Incidencias.h"
+#include "Reparar.h"
 #include <sstream>
 using namespace std;
 
@@ -16,6 +17,7 @@ private:
     ContenedorEquipos* contenedor;
     Incidencias* incidencias;
     string *reporte;
+    Reparar* reparacion;
 
 public:
     Simulador(int diasSimulacion = 31, int totalIncidencias = 100, double sensibilidad = 0.7);
@@ -30,6 +32,8 @@ public:
 
     void ejecutarSimulacion();
 
+    string getReporteDia(int dia);
+    string getReporteEquipo(int id);
 
     string generarReporte() override;
 };

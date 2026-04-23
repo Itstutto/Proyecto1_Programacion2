@@ -42,4 +42,6 @@ add_executable(Proyecto1 main.cpp
         IReporteDelDia.cpp
         IReporteDelDia.h
         ContenedorDePersonas.cpp
-        ContenedorDePersonas.h)
+        ContenedorDePersonas.h
+        Reparar.cpp
+        Reparar.h)

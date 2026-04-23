@@ -16,6 +16,8 @@ Equipo::Equipo() {
     criticidad = 0;
     enUso = false;
     danado = false;
+    reporte = new string[1];
+    diasReporte = 0;
 }
 
 Equipo::Equipo(int id, string const &nombre, int incidenciasActivas, int tiempoInactivo, int criticidad, bool enUso) {
@@ -42,6 +44,8 @@ Equipo::Equipo(int id, string const &nombre, int incidenciasActivas, int tiempoI
 
     this->enUso = enUso;
     danado = false;
+    reporte = new string[1];
+    diasReporte = 0;
 }
 
 float Equipo::prioridad() {
@@ -92,20 +96,25 @@ void Equipo::setNombre(string const &nombre) {
 }
 
 void Equipo::agregarIncidencia() {
+    stringstream s;
     incidenciasActivas++;
     if (incidenciasActivas > 3) {
         danado = true;
     }
+
+
+    s<<"La ha ocurrido una incidencia al equipo "<<endl;
+    s<<"Cantidad de incidencias activas: "<<incidenciasActivas<<endl;
+
+    reporte[diasReporte-1] += s.str();
+
+
 }
 
-void Equipo::eliminarIncidencia() {
-    if (incidenciasActivas > 0) {
-        incidenciasActivas--;
-    }
-     if (incidenciasActivas <= 4) {
-        danado = false;
-        eliminarTiempoInactivo();
-    }
+void Equipo::reparar() {
+    incidenciasActivas = 0; //al reparar se reparan todas sus incidencias
+    if (danado) danado = false;
+    eliminarTiempoInactivo();
 }
 
 void Equipo::agregarTiempoInactivo() {
@@ -116,12 +125,19 @@ void Equipo::agregarTiempoInactivo() {
 }
 
 void Equipo::eliminarTiempoInactivo() {
-    if (danado) {
-        throw ErrorContradiccion("No se puede eliminar tiempo inactivo a un equipo que esta dañado");
-    }
     tiempoInactivo = 0;
 }
 
+void Equipo::agregarDiaReporte() {
+    //aumenta el arreglo reporte en 1
+    string * nuevoReporte = new string[diasReporte + 1];
+    for (int i = 0; i < diasReporte; i++) {
+        nuevoReporte[i] = reporte[i];
+    }
+    delete[] reporte;
+    reporte = nuevoReporte;
+    diasReporte++;
+}
 
 
 void Equipo::setCriticidad(int criticidad) {
@@ -145,4 +161,21 @@ void Equipo::setUso(bool enUso) {
 
 
     this->enUso = enUso;
+}
+
+
+
+string Equipo::generarReporte() {
+    stringstream s;
+    for (int i=0; i<diasReporte; i++) {
+        s<<"------------------------Dia "<<i<<"------------------------"<<endl;
+        if (reporte[i].empty()) {
+            s<<"No ha ocurrido ninguna incidencia en este día."<<endl;
+        } else {
+            s<<reporte[i]<<endl;
+        }
+        s<<endl<<endl;
+    }
+
+    return s.str();
 }

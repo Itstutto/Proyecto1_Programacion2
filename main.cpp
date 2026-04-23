@@ -15,18 +15,18 @@
 using namespace std;
 
 int main() {
-    Simulador sim(30, 50, 1);
+    Simulador sim(30, 50, 0.1);
 
     try {
-        Servidores* servidor1 = new Servidores(2,"Servidor1",8, true, 0, 0);
+        Servidores* servidor1 = new Servidores(2,"Servidor1",8, true);
         servidor1->setUso(false);
-        Servidores* servidor2 = new Servidores(4,"Servidor2", 8, true, 0, 0);
-        Servidores* servidor3= new Servidores(1,"Servidor3", 7, false, 0, 0);
-        ComputadorasEscritorio* compuE1 = new ComputadorasEscritorio(5,"ComputadoraEscritorio1", 8, true, 0, 0);
-        Laptops* laptop1 = new Laptops(3,"Laptop1", 7, false, 0, 0);
-        AireAcondicionado* aire1 = new AireAcondicionado(6,"AireAcondicionado1", 6, true, 0, 0);
-        Grabadoras* grabadora1 = new Grabadoras(7,"Grabadora1", 3, false, 0, 0);
-        Camaras* camara1 = new Camaras(8,"Camara1", 2, true, 0, 0);
+        Servidores* servidor2 = new Servidores(4,"Servidor2", 8, true);
+        Servidores* servidor3= new Servidores(1,"Servidor3", 7);
+        ComputadorasEscritorio* compuE1 = new ComputadorasEscritorio(5,"ComputadoraEscritorio1", 8, true);
+        Laptops* laptop1 = new Laptops(3,"Laptop1", 7);
+        AireAcondicionado* aire1 = new AireAcondicionado(6,"AireAcondicionado1", 6, true);
+        Grabadoras* grabadora1 = new Grabadoras(7,"Grabadora1", 3);
+        Camaras* camara1 = new Camaras(8,"Camara1", 2, true);
 
 
         sim.agregarEquipo(servidor1);
@@ -46,6 +46,5 @@ int main() {
 
     sim.ejecutarSimulacion();
     cout<<sim.generarReporte()<<endl;
-
     return 0;
 }
