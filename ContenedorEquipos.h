@@ -15,6 +15,7 @@ private:
     Equipo** equipos;
     int tam;
     int cant;
+    bool ordenadoPorId = false;
 public:
     ContenedorEquipos();
     ~ContenedorEquipos();

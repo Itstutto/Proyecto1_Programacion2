@@ -64,4 +64,8 @@ add_executable(Proyecto1 main.cpp
         CreadorGrabadoras.cpp
         CreadorGrabadoras.h
         CreadorCamaras.cpp
-        CreadorCamaras.h)
+        CreadorCamaras.h
+        IReporte.h
+        ReporteEquipos.h
+        IDecoradorReportes.h
+        DecoradorRE.h)

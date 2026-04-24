@@ -12,6 +12,7 @@ ContenedorEquipos::ContenedorEquipos() {
     tam=100;
     cant = 0;
     equipos = new Equipo*[tam];
+    ordenadoPorId = false;
     for (int i = 0; i < tam; i++) {
         equipos[i] = nullptr;
     }
@@ -62,9 +63,25 @@ void ContenedorEquipos::eliminarEquipo(int id) {
 }
 
 Equipo * ContenedorEquipos::buscarEquipo(int id) {
-    for (int i = 0; i < cant; i++) {
-        if (equipos[i]->getId() == id) {
-            return equipos[i];
+    if (!ordenadoPorId) {
+        ordernarPorId();
+    }
+
+    //busqueda binaria por id
+    int izquierda = 0;
+    int derecha = cant - 1;
+
+    while (izquierda <= derecha) {
+        int medio = izquierda + (derecha - izquierda) / 2;
+        Equipo* equipo = equipos[medio];
+        if (equipo->getId() == id) {
+            return equipo;
+        }
+        else if (equipo->getId() < id) {
+            izquierda = medio + 1;
+        }
+        else {
+            derecha = medio - 1;
         }
     }
      throw ErrorNoEncontrado("No se encontró un equipo con el ID proporcionado");
@@ -117,6 +134,7 @@ void ContenedorEquipos::ordenarPorPrioridad() {
             }
         }
     }
+    ordenadoPorId = false;
 }
 
 void ContenedorEquipos::aumentarInactividad() {
@@ -139,4 +157,5 @@ void ContenedorEquipos::ordernarPorId()  {
             }
         }
     }
+    ordenadoPorId = true;
 }

@@ -9,6 +9,7 @@
 #include "Camaras.h"
 using namespace std;
 class CreadorCamaras : public CreadorEquipos{
+public:
     CreadorCamaras();
     Equipo* crearEquipos(const string& linea) override;
 };

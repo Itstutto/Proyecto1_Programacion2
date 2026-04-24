@@ -34,6 +34,6 @@ string Grabadoras::toString() {
 
 string Grabadoras::serializar() {
     stringstream ss;
-    ss << "Grabadora," << id << "," << getNombre() << "," << getIncidenciasActivas() << "," << getTiempoInactivo() << "," << getCriticidad() << "," << enUso << endl;
+    ss << "Grabadora," << id << "," << getNombre() << "," << getCriticidad() << "," << enUso << "," << getIncidenciasActivas() << "," << getTiempoInactivo() << endl;
     return ss.str();
 }

@@ -14,12 +14,15 @@
 #include "Simulador.h"
 #include "Archivos.h"
 #include "CreadorServidores.h"
+#include "DecoradorRE.h"
 #include "ErrorArchivoCorrupto.h"
+#include "IReporte.h"
+#include "ReporteEquipos.h"
 using namespace std;
 
 int main() {
-    Simulador sim(30, 50, 0.1);
-
+    Simulador sim(30, 100, 0.1);
+    /*
     try {
         Servidores* servidor1 = new Servidores(2,"Servidor1",8, true);
         servidor1->setUso(false);
@@ -45,22 +48,12 @@ int main() {
     }catch (const exception& e) {
         cerr << "Error: " << e.what() << endl;
     }
-
-
+*/
+    sim.cargarEquiposDesdeArchivo("equipos.txt");
     sim.ejecutarSimulacion();
-    cout<<sim.getReporteDia(5,true)<<endl;
+    string reporteCompleto = sim.generarReporte();
+    cout << reporteCompleto << endl;
 
 
-    Archivos archivos;
-    archivos.agregarCreador(new CreadorServidores());
-
-    try {
-        ContenedorEquipos* contenedorCargado = archivos.cargarEquipos("equipos.txt");
-        cout<<"Equipos cargados desde el archivo:"<<endl;
-        cout<<contenedorCargado->mostrarEquipos()<<endl;
-        delete contenedorCargado;
-    }catch (const exception& e) {
-        cerr<<"Error al cargar los equipos: "<<e.what()<<endl;
-    }
     return 0;
 }

@@ -167,6 +167,7 @@ void Equipo::setUso(bool enUso) {
 
 string Equipo::generarReporte() {
     stringstream s;
+    s<<"Reporte del equipo "<<id<<" - "<<nombre<<endl<<endl;
     for (int i=0; i<diasReporte; i++) {
         s<<"------------------------Dia "<<i<<"------------------------"<<endl;
         if (reporte[i].empty()) {
@@ -182,6 +183,6 @@ string Equipo::generarReporte() {
 
 string Equipo::infoBasica() {
     stringstream s;
-    s<<"ID: "<<id<<" Nombre: "<<nombre<<" Incidencias activas: "<<incidenciasActivas<<" Prioridad: "<<prioridad()<<" En uso: "<<(enUso ? "Sí" : "No")<<endl;
+    s<<"ID: "<<id<<" Nombre: "<<nombre<<" Incidencias activas: "<<incidenciasActivas<<" Prioridad: "<<prioridad()<<" En uso: "<<enUso<<endl;
     return s.str();
 }

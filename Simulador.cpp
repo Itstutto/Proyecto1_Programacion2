@@ -11,6 +11,7 @@ Simulador::Simulador(int diasSimulacion, int totalIncidencias, double sensibilid
     for (int i=0; i<=diasSimulacion; i++) {
         reporte[i] = new string[3];
     }
+    this->simulacionEjecutada = false;
     this->diasSimulacion = diasSimulacion;
     this->contenedor = new ContenedorEquipos();
     this->incidencias = new Incidencias(totalIncidencias, diasSimulacion, sensibilidad);
@@ -20,13 +21,22 @@ Simulador::Simulador(int diasSimulacion, int totalIncidencias, double sensibilid
     contenedorPersonas->agregarPersona(new PersonaMantenimiento("Tecnico2","2"));
     contenedorPersonas->agregarPersona(new PersonaMantenimiento("Tecnico3","3"));
 
+    //craeadores de gestor
+    gestorArchivos.agregarCreador(new CreadorServidores());
+    gestorArchivos.agregarCreador(new CreadorLaptops());
+    gestorArchivos.agregarCreador(new CreadorComputadorasEscritorio());
+    gestorArchivos.agregarCreador(new CreadorAireAcondicionado());
+    gestorArchivos.agregarCreador(new CreadorGrabadoras());
+    gestorArchivos.agregarCreador(new CreadorCamaras());
 }
 
 Simulador::~Simulador() {
-
-
     delete contenedor;
     delete incidencias;
+    delete reparacion;
+    for (int i=0; i<=diasSimulacion; i++) {
+        delete[] reporte[i];
+    }
     delete[] reporte;
     delete contenedorPersonas;
 
@@ -36,8 +46,24 @@ string Simulador::getEquiposSerializados() {
     return contenedor->serializar();
 }
 
+void Simulador::cargarEquiposDesdeArchivo(const string &nombreArchivo) {
+    if (simulacionEjecutada) {
+        throw ErrorArgumentoInvalido("No se pueden agregar equipos después de ejecutar la simulación");
+    }
+    ContenedorEquipos* c;
+    try {
+        c = gestorArchivos.cargarEquipos("equipos.txt");
+    }catch (const exception& e) {
+        cerr << "Error al cargar equipos desde archivo: " << e.what() << endl;
+        return;
+    }
+    delete contenedor;
+    contenedor = c;
+}
+
 void Simulador::agregarEquipo(Equipo *equipo) {
-    contenedor->agregarEquipo(equipo);
+
+
 }
 
 void Simulador::agregarPersona(PersonaMantenimiento *persona) {
@@ -92,12 +118,13 @@ void Simulador::ejecutarSimulacion() {
     contenedor->ordernarPorId();
     s.clear();
     reporte[diasSimulacion][2] = contenedor->mostrarEquipos();
+    simulacionEjecutada = true;
 
 }
 
 string Simulador::getReporteDia(int dia, bool incluirIncidencias, bool incluirReparaciones, bool incluirEstadoEquipos) {
 
-    if (dia < 0 || dia > diasSimulacion+1) {
+    if (dia < 0 || dia > diasSimulacion) {
         throw ErrorArgumentoInvalido("Día fuera de rango");
     }
 
@@ -120,41 +147,26 @@ string Simulador::getReporteDia(int dia, bool incluirIncidencias, bool incluirRe
 
 }
 
-string Simulador::getReporteEquipo(int id) {
-    //busqueda binaria por id, como el contenedor se ordena por id al final de la simulacion, se puede usar busqueda binaria
-
-    int izquierda = 0;
-    int derecha = contenedor->getCant() - 1;
-
-    while (izquierda <= derecha) {
-        int medio = izquierda + (derecha - izquierda) / 2;
-        Equipo* equipo = contenedor->buscarEquipoIndice(medio);
-        if (equipo->getId() == id) {
-            return equipo->generarReporte();
-        }
-        else if (equipo->getId() < id) {
-            izquierda = medio + 1;
-        }
-        else {
-            derecha = medio - 1;
-        }
-    }
+IReporteDelDia * Simulador::getReporteEquipo(int idEquipo) {
+    Equipo* equipo = contenedor->buscarEquipo(idEquipo);
+    if (!equipo) {
         throw ErrorNoEncontrado("No se encontró un equipo con el ID proporcionado");
-
+    }
+    return equipo;
 }
+
 
 string Simulador::generarReporte() {
     stringstream s;
     for (int i=0; i<=diasSimulacion; i++) {
-        for (int j=0; j<3; j++) {
+        s<<"------------------------Dia "<<i<<"------------------------"<<endl;
+        for (int j=0; j<2; j++) {
             if (!reporte[i][j].empty()) {
-                s<<"------------------------Dia "<<i<<"------------------------"<<endl;
+
                 if (j == 0) {
                     s<<"Incidencias:"<<endl;
                 } else if (j == 1) {
                     s<<"Reparaciones:"<<endl;
-                } else if (j == 2) {
-                    s<<"Estado de los equipos:"<<endl;
                 }
                 s<<reporte[i][j]<<endl;
             }

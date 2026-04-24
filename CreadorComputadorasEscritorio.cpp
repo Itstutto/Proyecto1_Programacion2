@@ -5,7 +5,7 @@
 #include "CreadorComputadorasEscritorio.h"
 #include "ErrorArchivoCorrupto.h"
 
-CreadorComputadorasEscritorio::CreadorComputadorasEscritorio() : CreadorEquipos("ComputadoraEscritoio"){
+CreadorComputadorasEscritorio::CreadorComputadorasEscritorio() : CreadorEquipos("ComputadoraEscritorio"){
 
 }
 

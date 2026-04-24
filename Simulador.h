@@ -7,8 +7,18 @@
 #include "ContenedorEquipos.h"
 #include "Incidencias.h"
 #include "Reparar.h"
+//incluir todos los creadores
+#include "CreadorServidores.h"
+#include "CreadorLaptops.h"
+#include "CreadorComputadorasEscritorio.h"
+#include "CreadorAireAcondicionado.h"
+#include "CreadorGrabadoras.h"
+#include "CreadorCamaras.h"
+
+
 #include <sstream>
 
+#include "Archivos.h"
 #include "ContenedorDePersonas.h"
 using namespace std;
 
@@ -16,11 +26,13 @@ class Simulador : public IReporteDelDia{
 private:
 
     int diasSimulacion;
+    bool simulacionEjecutada;
     ContenedorEquipos* contenedor;
     ContenedorDePersonas* contenedorPersonas;
     Incidencias* incidencias;
     string** reporte;
     Reparar* reparacion;
+    Archivos gestorArchivos;
 
 public:
     Simulador(int diasSimulacion = 31, int totalIncidencias = 100, double sensibilidad = 0.7);
@@ -28,6 +40,7 @@ public:
     ~Simulador();
 
     string getEquiposSerializados();
+    void cargarEquiposDesdeArchivo(const string& nombreArchivo);
 
     void agregarEquipo(Equipo* equipo);
     void agregarPersona(PersonaMantenimiento* persona);
@@ -37,7 +50,8 @@ public:
     void ejecutarSimulacion();
 
     string getReporteDia(int dia, bool incluirIncidencias = false, bool incluirReparaciones = false, bool incluirEstadoEquipos = false);
-    string getReporteEquipo(int id);
+
+    IReporteDelDia* getReporteEquipo(int idEquipo);
 
     string generarReporte() override;
 };

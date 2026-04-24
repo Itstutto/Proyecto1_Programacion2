@@ -28,18 +28,6 @@ Equipo* CreadorServidores::crearEquipos(const string &linea) {
     getline(s,nombre,',');
     getline(s, buffer, ',');
     try {
-        incidenciasActivas = stoi(buffer);
-    } catch (const invalid_argument& e) {
-        throw ErrorArchivoCorrupto("No se puede crear el objeto");
-    }
-    getline(s, buffer, ',');
-    try {
-        tiempoInactivo = stoi(buffer);
-    } catch (const invalid_argument& e) {
-        throw ErrorArchivoCorrupto("No se puede crear el objeto");
-    }
-    getline(s, buffer, ',');
-    try {
         criticidad = stoi(buffer);
     } catch (const invalid_argument& e) {
         throw ErrorArchivoCorrupto("No se puede crear el objeto");
@@ -52,6 +40,22 @@ Equipo* CreadorServidores::crearEquipos(const string &linea) {
     } else {
         throw ErrorArchivoCorrupto("No se puede crear el objeto");
     }
+    getline(s, buffer, ',');
+    try {
+        incidenciasActivas = stoi(buffer);
+    } catch (const invalid_argument& e) {
+        throw ErrorArchivoCorrupto("No se puede crear el objeto");
+    }
+    getline(s, buffer, ',');
+    try {
+        tiempoInactivo = stoi(buffer);
+    } catch (const invalid_argument& e) {
+        throw ErrorArchivoCorrupto("No se puede crear el objeto");
+    }
+
+
+
+
 
     Servidores* servidor = new Servidores(id, nombre, criticidad, enUso, incidenciasActivas, tiempoInactivo);
 
