@@ -15,7 +15,7 @@ public:
     ContenedorDePersonas();
     ~ContenedorDePersonas();
     void agregarPersona(PersonaMantenimiento* persona);
-    PersonaMantenimiento* getPersona(const string &id);
+    PersonaMantenimiento* getPersona(const int indice);
 
 
 };

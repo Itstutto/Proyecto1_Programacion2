@@ -59,8 +59,10 @@ public:
     virtual  string toString() = 0;
     virtual string serializar() = 0;
 
+    string infoBasica();
     string generarReporte() override;
 };
+
 
 
 #endif //PROYECTO1_EQUIPO_H

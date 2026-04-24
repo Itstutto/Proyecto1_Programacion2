@@ -44,4 +44,14 @@ add_executable(Proyecto1 main.cpp
         ContenedorDePersonas.cpp
         ContenedorDePersonas.h
         Reparar.cpp
-        Reparar.h)
+        Reparar.h
+        Archivos.cpp
+        Archivos.h
+        CreadorEquipos.cpp
+        CreadorEquipos.h
+        CreadorServidores.cpp
+        CreadorServidores.h
+        ErrorArchivoCorrupto.cpp
+        ErrorArchivoCorrupto.h
+        Creadores.cpp
+        Creadores.h)

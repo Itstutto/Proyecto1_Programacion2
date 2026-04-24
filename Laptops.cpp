@@ -34,6 +34,6 @@ string Laptops::toString() {
 
 string Laptops::serializar() {
     stringstream ss;
-    ss << id<<",Laptop," << getNombre() << "," << getIncidenciasActivas() << "," << getTiempoInactivo() << "," << getCriticidad() << "," << enUso<<endl;
+    ss << "Laptop," << id << "," << getNombre() << "," << getIncidenciasActivas() << "," << getTiempoInactivo() << "," << getCriticidad() << "," << enUso << endl;
     return ss.str();
 }

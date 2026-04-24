@@ -8,6 +8,8 @@
 #include "Incidencias.h"
 #include "Reparar.h"
 #include <sstream>
+
+#include "ContenedorDePersonas.h"
 using namespace std;
 
 class Simulador : public IReporteDelDia{
@@ -15,8 +17,9 @@ private:
 
     int diasSimulacion;
     ContenedorEquipos* contenedor;
+    ContenedorDePersonas* contenedorPersonas;
     Incidencias* incidencias;
-    string *reporte;
+    string** reporte;
     Reparar* reparacion;
 
 public:
@@ -24,15 +27,16 @@ public:
     // 31 dias porque existe el dia 0
     ~Simulador();
 
-
+    string getEquiposSerializados();
 
     void agregarEquipo(Equipo* equipo);
+    void agregarPersona(PersonaMantenimiento* persona);
 
-
+    void cambiarNombreTecnico(int indice, string nuevoNombre);
 
     void ejecutarSimulacion();
 
-    string getReporteDia(int dia);
+    string getReporteDia(int dia, bool incluirIncidencias = false, bool incluirReparaciones = false, bool incluirEstadoEquipos = false);
     string getReporteEquipo(int id);
 
     string generarReporte() override;

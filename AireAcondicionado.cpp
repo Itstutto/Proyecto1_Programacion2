@@ -34,6 +34,6 @@ string AireAcondicionado::toString() {
 
 string AireAcondicionado::serializar() {
     stringstream ss;
-    ss << id<<",AireAcondicionado," << getNombre() << "," << getIncidenciasActivas() << "," << getTiempoInactivo() << "," << getCriticidad() << "," << enUso<<endl;
+    ss << "AireAcondicionado," << id << "," << getNombre() << "," << getIncidenciasActivas() << "," << getTiempoInactivo() << "," << getCriticidad() << "," << enUso << endl;
     return ss.str();
 }

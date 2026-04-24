@@ -34,6 +34,6 @@ string ComputadorasEscritorio::toString() {
 
 string ComputadorasEscritorio::serializar() {
     stringstream ss;
-    ss << id<<",ComputadoraEscritorio," << getNombre() << "," << getIncidenciasActivas() << "," << getTiempoInactivo() << "," << getCriticidad() << "," << enUso<<endl;
+    ss << "ComputadoraEscritorio," << id << "," << getNombre() << "," << getIncidenciasActivas() << "," << getTiempoInactivo() << "," << getCriticidad() << "," << enUso << endl;
     return ss.str();
 }

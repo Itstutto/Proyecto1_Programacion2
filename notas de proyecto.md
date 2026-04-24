@@ -22,9 +22,24 @@ Nota: Agregar en simulacion un menu para que al final de la simulacion se puedan
 
 -Reporte total  
 -Reporte de cada equipo
-
-al entrar a cada menu  
--mostrar reporte en consola  
--crear archivo de texto con el reporte  
+ 
 
 Hay que revisar bien el calculo de la criticidad, ya que no se esta reparando equipos que no esten en uso, eso no es realista, ya que en la vida real, aunque un equipo no este en uso, si se le da mantenimiento para que este listo para cuando se necesite. Por lo tanto, se debe revisar el calculo de la criticidad para que sea mas realista.
+
+Menu:  
+1.Generar Reporte  
+a. Reporte total  
+b. Reporte de rango de dias
+c. Reporte de equipo especifico
+d. Volver  
+(en cada menu de reporte)  
+
+Ingrese el rango de dias (ejemplo: 1-30)  
+Desea incluir incidencias?  
+Desea incluir reparaciones?  
+Desea incluir estado de los equipos (cada dia)?  
+1. Consola
+2. Archivo de texto  
+   (si  se elige archivo de texto)
+Ingrese el nombre del archivo (ejemplo: reporte.txt)  
+// se ha creado exitosamente 

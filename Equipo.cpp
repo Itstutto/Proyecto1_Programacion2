@@ -50,7 +50,7 @@ Equipo::Equipo(int id, string const &nombre, int incidenciasActivas, int tiempoI
 
 float Equipo::prioridad() {
     //Pendiente falta, cantidad de
-        return ((float)incidenciasActivas * 0.3) + ((float)tiempoInactivo * 0.2) + ((float)(criticidad<0 ? 0 : criticidad) * 0.5);
+        return ((float)incidenciasActivas * 0.3) + ((float)tiempoInactivo * 0.2) + ((float)getCriticidad() * 0.5);
 }
 
 int Equipo::getId() {
@@ -150,13 +150,13 @@ void Equipo::setCriticidad(int criticidad) {
 void Equipo::setUso(bool enUso) {
     if (!enUso && this->enUso) {
         //Tiempo inactivo no significa que el equipo no este en uso (esta en uso pero no esta funcionando), por lo que no se puede ajustar el tiempo inactivo a 0,
-        //pero si se puede bajar 5 puntos de criticidad
-        this->criticidad = this->criticidad-5;
+        //pero si se puede bajar 1 punto de criticidad
+        this->criticidad = this->criticidad-1;
 
     }
     if (enUso && !this->enUso) {
-        //Si el equipo pasa de no estar en uso a estar en uso, ajustar el tiempo inactivo a 0 y subir 5 puntos de criticidad
-        this->criticidad = this->criticidad+5;
+        //Si el equipo pasa de no estar en uso a estar en uso, ajustar el tiempo inactivo a 0 y subir 1 punto de criticidad
+        this->criticidad = this->criticidad+1;
     }
 
 
@@ -177,5 +177,11 @@ string Equipo::generarReporte() {
         s<<endl<<endl;
     }
 
+    return s.str();
+}
+
+string Equipo::infoBasica() {
+    stringstream s;
+    s<<"ID: "<<id<<" Nombre: "<<nombre<<" Incidencias activas: "<<incidenciasActivas<<" Prioridad: "<<prioridad()<<" En uso: "<<(enUso ? "Sí" : "No")<<endl;
     return s.str();
 }

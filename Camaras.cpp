@@ -34,6 +34,6 @@ string Camaras::toString() {
 
 string Camaras::serializar() {
     stringstream ss;
-    ss << id<<",Camaras," << getNombre() << "," << getIncidenciasActivas() << "," << getTiempoInactivo() << "," << getCriticidad() << "," << enUso<<endl;
+    ss << "Camaras," << id << "," << getNombre() << "," << getIncidenciasActivas() << "," << getTiempoInactivo() << "," << getCriticidad() << "," << enUso << endl;
     return ss.str();
 }

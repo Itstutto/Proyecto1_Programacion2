@@ -94,7 +94,7 @@ string ContenedorEquipos::mostrarEquipos() {
 string ContenedorEquipos::serializar() {
     stringstream ss;
     for (int i = 0; i < cant; i++) {
-        ss << equipos[i]->serializar() << endl;
+        ss << equipos[i]->serializar();
     }
     return ss.str();
 }

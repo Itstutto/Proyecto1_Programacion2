@@ -12,6 +12,9 @@
 #include "Camaras.h"
 #include "Incidencias.h"
 #include "Simulador.h"
+#include "Archivos.h"
+#include "CreadorServidores.h"
+#include "ErrorArchivoCorrupto.h"
 using namespace std;
 
 int main() {
@@ -45,6 +48,19 @@ int main() {
 
 
     sim.ejecutarSimulacion();
-    cout<<sim.generarReporte()<<endl;
+    cout<<sim.getReporteDia(5,true)<<endl;
+
+
+    Archivos archivos;
+    archivos.agregarCreador(new CreadorServidores());
+
+    try {
+        ContenedorEquipos* contenedorCargado = archivos.cargarEquipos("equipos.txt");
+        cout<<"Equipos cargados desde el archivo:"<<endl;
+        cout<<contenedorCargado->mostrarEquipos()<<endl;
+        delete contenedorCargado;
+    }catch (const exception& e) {
+        cerr<<"Error al cargar los equipos: "<<e.what()<<endl;
+    }
     return 0;
 }

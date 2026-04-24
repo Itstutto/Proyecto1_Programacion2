@@ -13,7 +13,7 @@ class Reparar : public IReporteDelDia{
     string reporte;
 public:
     Reparar() : reporte("") {}
-    void repararEquipo(Equipo* equipo, PersonaMantenimiento* persona);
+    bool repararEquipo(Equipo* equipo, PersonaMantenimiento* persona);
     string generarReporte() override;
 };
 
