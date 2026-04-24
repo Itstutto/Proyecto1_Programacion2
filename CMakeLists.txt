@@ -54,4 +54,14 @@ add_executable(Proyecto1 main.cpp
         ErrorArchivoCorrupto.cpp
         ErrorArchivoCorrupto.h
         Creadores.cpp
-        Creadores.h)
+        Creadores.h
+        CreadorComputadorasEscritorio.cpp
+        CreadorComputadorasEscritorio.h
+        CreadorLaptops.cpp
+        CreadorLaptops.h
+        CreadorAireAcondicionado.cpp
+        CreadorAireAcondicionado.h
+        CreadorGrabadoras.cpp
+        CreadorGrabadoras.h
+        CreadorCamaras.cpp
+        CreadorCamaras.h)

@@ -7,6 +7,7 @@
 #include "CreadorEquipos.h"
 #include <sstream>
 #include "Servidores.h"
+using namespace std;
 class CreadorServidores : public CreadorEquipos{
 public:
     CreadorServidores();
