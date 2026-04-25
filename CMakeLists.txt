@@ -74,4 +74,6 @@ add_executable(Proyecto1 main.cpp
         GuardarEnArchivoTexto.h
         GuardarEnConsola.h
         Guardar.cpp
-        Guardar.h)
+        Guardar.h
+        Menu.cpp
+        Menu.h)
