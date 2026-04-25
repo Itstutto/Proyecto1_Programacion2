@@ -16,12 +16,13 @@
 #include "CreadorServidores.h"
 #include "DecoradorRE.h"
 #include "ErrorArchivoCorrupto.h"
+#include "GuardarEnArchivoTexto.h"
 #include "IReporte.h"
 #include "ReporteEquipos.h"
 using namespace std;
 
 int main() {
-    Simulador sim(30, 100, 0.1);
+    Simulador sim(31, 300, 0.1);
     /*
     try {
         Servidores* servidor1 = new Servidores(2,"Servidor1",8, true);
@@ -53,6 +54,9 @@ int main() {
     sim.ejecutarSimulacion();
     string reporteCompleto = sim.generarReporte();
     cout << reporteCompleto << endl;
+    sim.setGuardador(new GuardarEnArchivoTexto("primerReporte.txt"));
+    sim.guardarReporte(sim.generarReporte());
+
 
 
     return 0;

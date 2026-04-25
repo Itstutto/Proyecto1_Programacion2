@@ -183,6 +183,6 @@ string Equipo::generarReporte() {
 
 string Equipo::infoBasica() {
     stringstream s;
-    s<<"ID: "<<id<<" Nombre: "<<nombre<<" Incidencias activas: "<<incidenciasActivas<<" Prioridad: "<<prioridad()<<" En uso: "<<enUso<<endl;
+    s<<"ID: "<<id<<" Nombre: "<<nombre<<" Incidencias activas: "<<incidenciasActivas<<" Prioridad: "<<prioridad()<<" En uso: "<<(enUso ? "Si" : "No")<<endl;
     return s.str();
 }

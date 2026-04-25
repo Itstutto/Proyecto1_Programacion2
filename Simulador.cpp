@@ -6,7 +6,7 @@
 
 #include "ErrorArgumentoInvalido.h"
 
-Simulador::Simulador(int diasSimulacion, int totalIncidencias, double sensibilidad) {
+Simulador::Simulador(int diasSimulacion, int totalIncidencias, double sensibilidad) : guardador(nullptr){
     this->reporte = new string * [diasSimulacion+1];// +1 para incluir el estado final
     for (int i=0; i<=diasSimulacion; i++) {
         reporte[i] = new string[3];
@@ -20,7 +20,6 @@ Simulador::Simulador(int diasSimulacion, int totalIncidencias, double sensibilid
     contenedorPersonas->agregarPersona(new PersonaMantenimiento("Tecnico1","1"));
     contenedorPersonas->agregarPersona(new PersonaMantenimiento("Tecnico2","2"));
     contenedorPersonas->agregarPersona(new PersonaMantenimiento("Tecnico3","3"));
-
     //craeadores de gestor
     gestorArchivos.agregarCreador(new CreadorServidores());
     gestorArchivos.agregarCreador(new CreadorLaptops());
@@ -28,6 +27,8 @@ Simulador::Simulador(int diasSimulacion, int totalIncidencias, double sensibilid
     gestorArchivos.agregarCreador(new CreadorAireAcondicionado());
     gestorArchivos.agregarCreador(new CreadorGrabadoras());
     gestorArchivos.agregarCreador(new CreadorCamaras());
+
+
 }
 
 Simulador::~Simulador() {
@@ -62,8 +63,7 @@ void Simulador::cargarEquiposDesdeArchivo(const string &nombreArchivo) {
 }
 
 void Simulador::agregarEquipo(Equipo *equipo) {
-
-
+    contenedor->agregarEquipo(equipo);
 }
 
 void Simulador::agregarPersona(PersonaMantenimiento *persona) {
@@ -121,6 +121,15 @@ void Simulador::ejecutarSimulacion() {
     simulacionEjecutada = true;
 
 }
+
+void Simulador::guardarReporte(const string &reporte) {
+    guardador.guardarReporte(reporte);
+}
+
+void Simulador::setGuardador(IGuardarReporte *nuevaEstrategia) {
+    guardador.setGuardado(nuevaEstrategia);
+}
+
 
 string Simulador::getReporteDia(int dia, bool incluirIncidencias, bool incluirReparaciones, bool incluirEstadoEquipos) {
 

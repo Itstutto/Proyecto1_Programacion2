@@ -68,4 +68,10 @@ add_executable(Proyecto1 main.cpp
         IReporte.h
         ReporteEquipos.h
         IDecoradorReportes.h
-        DecoradorRE.h)
+        DecoradorRE.h
+        IGuardarReporte.h
+        GuardarEnArchivoTexto.cpp
+        GuardarEnArchivoTexto.h
+        GuardarEnConsola.h
+        Guardar.cpp
+        Guardar.h)

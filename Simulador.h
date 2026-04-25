@@ -20,6 +20,7 @@
 
 #include "Archivos.h"
 #include "ContenedorDePersonas.h"
+#include "Guardar.h"
 using namespace std;
 
 class Simulador : public IReporteDelDia{
@@ -33,6 +34,7 @@ private:
     string** reporte;
     Reparar* reparacion;
     Archivos gestorArchivos;
+    Guardar guardador;
 
 public:
     Simulador(int diasSimulacion = 31, int totalIncidencias = 100, double sensibilidad = 0.7);
@@ -48,6 +50,9 @@ public:
     void cambiarNombreTecnico(int indice, string nuevoNombre);
 
     void ejecutarSimulacion();
+
+    void guardarReporte(const string& reporte);
+    void setGuardador(IGuardarReporte* nuevaEstrategia);
 
     string getReporteDia(int dia, bool incluirIncidencias = false, bool incluirReparaciones = false, bool incluirEstadoEquipos = false);
 
