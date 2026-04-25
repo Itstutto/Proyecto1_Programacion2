@@ -8,7 +8,7 @@
 #include "ErrorPunteroNulo.h"
 #include "ErrorRepetido.h"
 
-ContenedorEquipos::ContenedorEquipos() {
+ContenedorEquipos:: ContenedorEquipos() {
     tam=100;
     cant = 0;
     equipos = new Equipo*[tam];

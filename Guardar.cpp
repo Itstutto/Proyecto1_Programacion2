@@ -16,6 +16,10 @@ Guardar::~Guardar() {
 }
 
 void Guardar::guardarReporte(const string &reporte) {
+    if (estrategiaGuardado == nullptr) {
+        throw ErrorArchivoCorrupto("No se ha establecido una estrategia de guardado");
+    }
+
         estrategiaGuardado->guardarReporte(reporte);
 }
 

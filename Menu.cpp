@@ -144,7 +144,9 @@ void Menu::reporteEquipos(Simulador* simulador) {
 }
 
 void Menu::generarSalida(Simulador* simulador, string contenido) {
+    Archivos gestorArchivos;
     IGuardarReporte* guardador;
+
     char op;
     cout<<"Elija el formato de salida: "<<endl;
     cout<<"a. Consola"<<endl;
@@ -166,6 +168,6 @@ void Menu::generarSalida(Simulador* simulador, string contenido) {
             cout << "Opcion invalida, se usara consola por defecto." << endl;
             guardador = new GuardarEnConsola();
     }
-    simulador->setGuardador(guardador);
-    simulador->guardarReporte(contenido);
+    gestorArchivos.agregarGuardador(guardador);
+    gestorArchivos.guardarArchivo(contenido);
 }

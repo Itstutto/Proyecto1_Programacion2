@@ -6,55 +6,34 @@
 
 #include "ErrorArgumentoInvalido.h"
 #include "ErrorArchivoCorrupto.h"
-Archivos::Archivos() {
-    creadores = new Creadores();
+Archivos::Archivos() :  guardador(nullptr) {
+     //creadores de gestor
+    lector.agregarCreador(new CreadorServidores());
+    lector.agregarCreador(new CreadorLaptops());
+    lector.agregarCreador(new CreadorComputadorasEscritorio());
+    lector.agregarCreador(new CreadorAireAcondicionado());
+    lector.agregarCreador(new CreadorGrabadoras());
+    lector.agregarCreador(new CreadorCamaras());
 }
 
 Archivos::~Archivos() {
-    delete creadores;
 }
 
-void Archivos::guardarArchivo(const string &nombreArchivo, const string &reporte) {
-    ofstream archivo(nombreArchivo);
-    if (!archivo.is_open()) {
-        archivo.close();
-        throw runtime_error("No se pudo abrir el archivo para escribir");
-    }
-    archivo << reporte;
-    archivo.close();
+void Archivos::guardarArchivo(const string &reporte) {
+    guardador.guardarReporte(reporte);
+}
 
+void Archivos::agregarGuardador(IGuardarReporte *nuevaEstrategia) {
+    if (nuevaEstrategia == nullptr) {
+        throw ErrorArgumentoInvalido("La estrategia de guardado no puede ser nula");
+    }
+    guardador.setGuardado(nuevaEstrategia);
 }
 
 ContenedorEquipos* Archivos::cargarEquipos(const string &nombreArchivo) {
-    ContenedorEquipos* contenedor = new ContenedorEquipos();
-    ifstream archivo(nombreArchivo);
-    if (!archivo.is_open()) {
-        throw Error("No se pudo abrir el archivo para leer");
-    }
-    string tipo;
-    string datos;
-    string linea;
-    stringstream buffer;
-    while (getline(archivo, linea)) {
-        if (linea.empty()) {
-            continue; // Saltar líneas vacías
-        }
-        buffer.clear();
-        buffer.str(linea);
-        if (!getline(buffer, tipo, ',')) {
-            throw ErrorArchivoCorrupto("Archivo corrupto: no se pudo leer el tipo de equipo");
-        }
-        if (!getline(buffer, datos)) {
-            throw ErrorArchivoCorrupto("Archivo corrupto: no se pudo leer los datos del equipo");
-        }
-        CreadorEquipos* creador = creadores->getCreador(tipo);
-        if (creador == nullptr) {
-            delete contenedor;
-            throw ErrorArgumentoInvalido("No se posee un creador para el tipo de objeto "+tipo);
-        }
-
-        contenedor->agregarEquipo(creador->crearEquipos(datos));
-
+    ContenedorEquipos* contenedor = lector.cargarEquipos(nombreArchivo);
+    if (contenedor == nullptr) {
+        throw ErrorArchivoCorrupto("El archivo está corrupto o no tiene el formato correcto");
     }
     return contenedor;
 }
@@ -63,5 +42,5 @@ void Archivos::agregarCreador(CreadorEquipos *creador) {
     if (creador == nullptr) {
         throw ErrorArgumentoInvalido("El creador no puede ser nulo");
     }
-    creadores->agregarCreador(creador);
+    lector.agregarCreador(creador);
 }

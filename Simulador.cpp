@@ -6,7 +6,7 @@
 
 #include "ErrorArgumentoInvalido.h"
 
-Simulador::Simulador(int diasSimulacion, int totalIncidencias, double sensibilidad) : guardador(nullptr){
+Simulador::Simulador(int diasSimulacion, int totalIncidencias, double sensibilidad) {
     this->reporte = new string * [diasSimulacion+1];// +1 para incluir el estado final
     for (int i=0; i<=diasSimulacion; i++) {
         reporte[i] = new string[3];
@@ -20,13 +20,7 @@ Simulador::Simulador(int diasSimulacion, int totalIncidencias, double sensibilid
     contenedorPersonas->agregarPersona(new PersonaMantenimiento("Tecnico1","1"));
     contenedorPersonas->agregarPersona(new PersonaMantenimiento("Tecnico2","2"));
     contenedorPersonas->agregarPersona(new PersonaMantenimiento("Tecnico3","3"));
-    //craeadores de gestor
-    gestorArchivos.agregarCreador(new CreadorServidores());
-    gestorArchivos.agregarCreador(new CreadorLaptops());
-    gestorArchivos.agregarCreador(new CreadorComputadorasEscritorio());
-    gestorArchivos.agregarCreador(new CreadorAireAcondicionado());
-    gestorArchivos.agregarCreador(new CreadorGrabadoras());
-    gestorArchivos.agregarCreador(new CreadorCamaras());
+    //craeadores de gesto
 
 
 }
@@ -47,19 +41,15 @@ string Simulador::getEquiposSerializados() {
     return contenedor->serializar();
 }
 
-void Simulador::cargarEquiposDesdeArchivo(const string &nombreArchivo) {
+void Simulador::setEquipos(ContenedorEquipos *nuevoContenedor) {
     if (simulacionEjecutada) {
-        throw ErrorArgumentoInvalido("No se pueden agregar equipos después de ejecutar la simulación");
+        throw ErrorArgumentoInvalido("No se pueden cambiar los equipos después de ejecutar la simulación");
     }
-    ContenedorEquipos* c;
-    try {
-        c = gestorArchivos.cargarEquipos("equipos.txt");
-    }catch (const exception& e) {
-        cerr << "Error al cargar equipos desde archivo: " << e.what() << endl;
-        return;
+    if (nuevoContenedor == nullptr) {
+        throw ErrorPunteroNulo("El nuevo contenedor no puede ser nulo");
     }
     delete contenedor;
-    contenedor = c;
+    contenedor = nuevoContenedor;
 }
 
 void Simulador::agregarEquipo(Equipo *equipo) {
@@ -120,14 +110,6 @@ void Simulador::ejecutarSimulacion() {
     reporte[diasSimulacion][2] = contenedor->mostrarEquipos();
     simulacionEjecutada = true;
 
-}
-
-void Simulador::guardarReporte(const string &reporte) {
-    guardador.guardarReporte(reporte);
-}
-
-void Simulador::setGuardador(IGuardarReporte *nuevaEstrategia) {
-    guardador.setGuardado(nuevaEstrategia);
 }
 
 

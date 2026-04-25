@@ -1,4 +1,5 @@
 #include <iostream>
+#include <mutex>
 #include <random>
 
 #include "ContenedorEquipos.h"
@@ -50,12 +51,24 @@ int main() {
         cerr << "Error: " << e.what() << endl;
     }
 */
-    sim.cargarEquiposDesdeArchivo("equipos.txt");
+    Archivos gestorArchivos;
+    ContenedorEquipos* contenedor = nullptr;
+    try {
+        contenedor = gestorArchivos.cargarEquipos("equipos.txt");
+        sim.setEquipos(contenedor);
+    } catch (const exception& e) {
+        cerr << "Error al cargar el archivo: " << e.what() << endl;
+        return 1; // Salir con código de error
+    }
     sim.ejecutarSimulacion();
     string reporteCompleto = sim.generarReporte();
-    cout << reporteCompleto << endl;
-    sim.setGuardador(new GuardarEnArchivoTexto("primerReporte.txt"));
-    sim.guardarReporte(sim.generarReporte());
+    IGuardarReporte* guardador = new GuardarEnArchivoTexto("reporte.txt");
+    gestorArchivos.agregarGuardador(guardador);
+     try {
+        gestorArchivos.guardarArchivo(reporteCompleto);
+    } catch (const exception& e) {
+        cerr << "Error al guardar el archivo: " << e.what() << endl;
+    }
 
 
 

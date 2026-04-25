@@ -33,8 +33,6 @@ private:
     Incidencias* incidencias;
     string** reporte;
     Reparar* reparacion;
-    Archivos gestorArchivos;
-    Guardar guardador;
 
 public:
     Simulador(int diasSimulacion = 31, int totalIncidencias = 100, double sensibilidad = 0.7);
@@ -42,7 +40,7 @@ public:
     ~Simulador();
 
     string getEquiposSerializados();
-    void cargarEquiposDesdeArchivo(const string& nombreArchivo);
+    void setEquipos(ContenedorEquipos* nuevoContenedor);
 
     void agregarEquipo(Equipo* equipo);
     void agregarPersona(PersonaMantenimiento* persona);
@@ -51,8 +49,6 @@ public:
 
     void ejecutarSimulacion();
 
-    void guardarReporte(const string& reporte);
-    void setGuardador(IGuardarReporte* nuevaEstrategia);
 
     string getReporteDia(int dia, bool incluirIncidencias = false, bool incluirReparaciones = false, bool incluirEstadoEquipos = false);
 

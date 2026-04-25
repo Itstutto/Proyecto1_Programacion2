@@ -9,14 +9,27 @@
 #include <sstream>
 #include "Creadores.h"
 #include "ContenedorEquipos.h"
+#include "Guardar.h"
+#include "Leer.h"
+#include "CreadorServidores.h"
+#include "CreadorLaptops.h"
+#include "CreadorComputadorasEscritorio.h"
+#include "CreadorAireAcondicionado.h"
+#include "CreadorGrabadoras.h"
+#include "CreadorCamaras.h"
+#include "ErrorArgumentoInvalido.h"
+#include "ErrorArchivoCorrupto.h"
+
 using namespace std;
 
 class Archivos {
-    Creadores* creadores;
+    Leer lector;
+    Guardar guardador;
 public:
     Archivos();
     ~Archivos();
-    static void guardarArchivo(const string& nombreArchivo, const string& reporte);
+    void guardarArchivo(const string& reporte);
+    void agregarGuardador(IGuardarReporte* nuevaEstrategia);
     ContenedorEquipos* cargarEquipos(const string& nombreArchivo);
     void agregarCreador(CreadorEquipos* creador);
 };
