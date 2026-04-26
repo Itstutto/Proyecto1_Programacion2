@@ -39,6 +39,7 @@ public:
     // 31 dias porque existe el dia 0
     ~Simulador();
 
+    string getListaEquipos();
     string getEquiposSerializados();
     void setEquipos(ContenedorEquipos* nuevoContenedor);
 
@@ -51,6 +52,7 @@ public:
 
 
     string getReporteDia(int dia, bool incluirIncidencias = false, bool incluirReparaciones = false, bool incluirEstadoEquipos = false);
+    string getReporteRangoDias(int diaInicio, int diaFin, bool incluirIncidencias = true, bool incluirReparaciones = true, bool incluirEstadoEquipos = false);
 
     IReporteDelDia* getReporteEquipo(int idEquipo);
 

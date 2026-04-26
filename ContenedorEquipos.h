@@ -27,6 +27,7 @@ public:
     Equipo* buscarEquipo(int id);
     Equipo* buscarEquipoIndice(int indice);
     string mostrarEquipos();
+    string mostrarEquiposLista();
     string serializar();
 
     void agregarDiaReporte();

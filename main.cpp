@@ -19,6 +19,7 @@
 #include "ErrorArchivoCorrupto.h"
 #include "GuardarEnArchivoTexto.h"
 #include "IReporte.h"
+#include "Menu.h"
 #include "ReporteEquipos.h"
 using namespace std;
 
@@ -61,15 +62,8 @@ int main() {
         return 1; // Salir con código de error
     }
     sim.ejecutarSimulacion();
-    string reporteCompleto = sim.generarReporte();
-    IGuardarReporte* guardador = new GuardarEnArchivoTexto("reporte.txt");
-    gestorArchivos.agregarGuardador(guardador);
-     try {
-        gestorArchivos.guardarArchivo(reporteCompleto);
-    } catch (const exception& e) {
-        cerr << "Error al guardar el archivo: " << e.what() << endl;
-    }
-
+    Menu    menu;
+    menu.menuFinal(&sim);
 
 
     return 0;

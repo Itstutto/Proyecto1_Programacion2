@@ -3,9 +3,13 @@
 //
 
 #include "Menu.h"
+
+#include "DecoradorRE.h"
 #include "ErrorArgumentoInvalido.h"
 #include"GuardarEnArchivoTexto.h"
 #include"GuardarEnConsola.h"
+#include "IReporte.h"
+#include "ReporteEquipos.h"
 
 void Menu::menuPrincipal(Simulador* simulador) {
   /*  int op;
@@ -48,8 +52,11 @@ void Menu::menuFinal(Simulador *simulador) {
         cout << "2. Salir"<<endl;
         cout << "Seleccione: ";
         cin >> op;
+        cout<<endl<<endl;
+
 
         try {
+
             if (cin.fail()) throw "Entrada invalida";
 
             switch(op) {
@@ -98,9 +105,10 @@ void Menu::menuReportes(Simulador* simulador) {
     } while(op != 'd');
 }
 
+
 void Menu::reporteTotal(Simulador* simulador) {
 
-    generarSalida(simulador,simulador->generarReporte());
+    generarSalida(simulador->generarReporte());
 
 }
 
@@ -130,8 +138,8 @@ void Menu::reporteRangoDias(Simulador* simulador) {
     cin >> estado;
     incluirEstado = (estado == 's' || estado == 'S');
     try {
-        reporte = simulador->getReporteDia(inicio, incluirIncidencias, incluirReparaciones, incluirEstado);
-        generarSalida(simulador,reporte);
+        reporte = simulador->getReporteRangoDias(inicio,final,incluirIncidencias, incluirReparaciones, incluirEstado);
+        generarSalida(reporte);
     }catch (const ErrorArgumentoInvalido& e) {
         cout << "Error: " << e.what() << endl;
     }
@@ -139,11 +147,30 @@ void Menu::reporteRangoDias(Simulador* simulador) {
 }
 
 void Menu::reporteEquipos(Simulador* simulador) {
+    IReporte* reporteBase = new ReporteEquipos();
+    IReporte* reporteDecorado;
+    cout<< simulador->getListaEquipos()<<endl;
+
+    int id = 0;
+    while (id != -1) {
+
+        cout<< "Ingrese el ID del equipo que desea agregar al reporte (o -1 para salir): ";
+        cin >> id;
+        try {
+            reporteDecorado = new DecoradorRE(simulador->getReporteEquipo(id), reporteBase);
+            reporteBase = reporteDecorado; // El nuevo reporte decorado se convierte en la base para el siguiente
+        } catch (const ErrorNoEncontrado& e) {
+            cout << "Error: " << e.what() << endl;
+        }
+    }
+
+        generarSalida(reporteBase->generarReporte());
+        delete reporteBase; // Esto eliminará todos los decoradores encadenados
 
 
 }
 
-void Menu::generarSalida(Simulador* simulador, string contenido) {
+void Menu::generarSalida(string contenido) {
     Archivos gestorArchivos;
     IGuardarReporte* guardador;
 

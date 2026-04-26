@@ -31,6 +31,7 @@ Menu:
 a. Reporte total  
 b. Reporte de rango de dias
 c. Reporte de equipo especifico
+d. Reporte de un tipo de equipo especifico (ejemplo: solo computadoras de escritorio)  
 d. Volver  
 (en cada menu de reporte)  
 
@@ -42,4 +43,9 @@ Desea incluir estado de los equipos (cada dia)?
 2. Archivo de texto  
    (si  se elige archivo de texto)
 Ingrese el nombre del archivo (ejemplo: reporte.txt)  
-// se ha creado exitosamente 
+// se ha creado exitosamente  
+Menu inicial: 
+1. Cargar equipos desde archivo de texto
+2. Ingresar equipos manualmente
+3. Iniciar simulacion
+4. Cambiar nombre de tecnicos

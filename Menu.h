@@ -21,7 +21,7 @@ private:
     void reporteRangoDias(Simulador* simulador);
     void reporteEquipos(Simulador* simulador);
 
-    void generarSalida(Simulador* simulador, string contenido);
+    void generarSalida(string contenido);
 };
 
 

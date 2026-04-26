@@ -37,6 +37,10 @@ Simulador::~Simulador() {
 
 }
 
+string Simulador::getListaEquipos() {
+    return contenedor->mostrarEquiposLista();
+}
+
 string Simulador::getEquiposSerializados() {
     return contenedor->serializar();
 }
@@ -136,6 +140,19 @@ string Simulador::getReporteDia(int dia, bool incluirIncidencias, bool incluirRe
     }
     return s.str();
 
+}
+
+string Simulador::getReporteRangoDias(int diaInicio, int diaFin, bool incluirIncidencias, bool incluirReparaciones,
+    bool incluirEstadoEquipos) {
+    stringstream s;
+    if (diaInicio < 0 || diaFin > diasSimulacion || diaInicio > diaFin) {
+        throw ErrorArgumentoInvalido("Rango de días inválido");
+    }
+
+    for (int i=diaInicio; i<=diaFin; i++) {
+        s<<getReporteDia(i, incluirIncidencias, incluirReparaciones, incluirEstadoEquipos)<<endl;
+    }
+    return s.str();
 }
 
 IReporteDelDia * Simulador::getReporteEquipo(int idEquipo) {

@@ -108,6 +108,16 @@ string ContenedorEquipos::mostrarEquipos() {
 
 }
 
+string ContenedorEquipos::mostrarEquiposLista() {
+    //mostrar solo id y nombre
+    stringstream ss;
+    for (int i = 0; i < cant; i++) {
+        ss<<"--------------------------------"<<endl;
+        ss<<i+1<<". "<<"ID: "<<equipos[i]->getId()<<" - "<<equipos[i]->getNombre()<<endl;
+    }
+    return ss.str();
+}
+
 string ContenedorEquipos::serializar() {
     stringstream ss;
     for (int i = 0; i < cant; i++) {

@@ -14,6 +14,7 @@ void GuardarEnArchivoTexto::guardarReporte(const string &reporte) {
                 archivo.close();
                 throw runtime_error("No se pudo abrir el archivo para escribir");
         }
-        archivo << reporte;
+        archivo << reporte << flush;
         archivo.close();
+        cout<<"Reporte guardado en archivo: " << nombreArchivo << endl;
 }
