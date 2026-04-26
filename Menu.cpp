@@ -12,36 +12,114 @@
 #include "ReporteEquipos.h"
 
 void Menu::menuPrincipal(Simulador* simulador) {
-  /*  int op;
+    int op1;
+  while (op1 != 1) {
+      cout << "--- SIMULACION ---" << endl;
+      cout << "1. Cargar equipos desde archivos "<<endl;
+      cout << "2. Ingresar equipos manualmente "<<endl;
+      cout << "3. Ejecutar Simulacion" << endl;
+      cout << "4. Cambiar nombre de tecnico"<<endl;
 
-    do {
-        cout << "--- MENU ---"<<endl;
-        cout << "1. Generar Reporte"<<endl;
-        cout << "2. Salir"<<endl;
-        cout << "Seleccione: ";
-        cin >> op;
-
+      cout << "Seleccione: ";
+      cin >> op1;
+  }
         try {
             if (cin.fail()) throw "Entrada invalida";
+            switch (op1) {
+                case 1: {
+                    Archivos gestorArchivos;
+                    ContenedorEquipos* contenedor = nullptr;
+                    string nombreArchivo;
+                    cout<<"En que archivo se encuentran los equipos?"<<endl;
+                    cin>>nombreArchivo;
+                    try {
+                        contenedor = gestorArchivos.cargarEquipos(nombreArchivo);
+                        simulador->setEquipos(contenedor);
+                    } catch (const exception& e) {
+                        cerr << "Error al cargar el archivo: " << e.what() << endl;
+                    }
+                    break;
+                }
+                case 2: {
+                    int cantidadEquipos;
+                    cout << "Cuantos equipos desea ingresar? ";
+                    cin >> cantidadEquipos;
+                    cin.ignore(); // Limpiar el buffer
 
-            switch(op) {
-                case 1:
-                    menuReportes(simulador);
+                    for (int i = 0; i < cantidadEquipos; ++i) {
+                        string tipo, nombre;
+                        int id, incidenciasActivas, tiempoInactivo, criticidad;
+                        bool enUso;
+
+                        cout << "Ingrese el tipo de equipo (Servidor, Laptop, ComputadoraEscritorio, AireAcondicionado, Grabadora, Camara): ";
+                        getline(cin, tipo);
+                        cout << "Ingrese el ID del equipo: ";
+                        cin >> id;
+                        cout << "Ingrese el nombre del equipo: ";
+                        cin.ignore();
+                        getline(cin, nombre);
+                        cout << "Ingrese las incidencias del equipo: ";
+                        cin >> incidenciasActivas;
+                        cout << "Ingrese el tiempo inactivo del equipo: ";
+                        cin >> tiempoInactivo;
+                        cout << "Ingrese la criticidad del equipo: ";
+                        cin >> criticidad;
+                        cout<<"Ingrese si el equipo esta en uso (1 para si, 0 para no): ";
+                        cin >> enUso;
+
+                        Equipo* nuevoEquipo = nullptr;
+                        if (tipo == "Servidor") {
+                            nuevoEquipo = new Servidores(id, nombre,criticidad, enUso, incidenciasActivas, tiempoInactivo);
+                        } else if (tipo == "Laptop") {
+                            nuevoEquipo = new Laptops(id, nombre,criticidad, enUso, incidenciasActivas, tiempoInactivo);
+                        } else if (tipo == "ComputadoraEscritorio") {
+                            nuevoEquipo = new ComputadorasEscritorio(id, nombre,criticidad, enUso, incidenciasActivas, tiempoInactivo);
+                        } else if (tipo == "AireAcondicionado") {
+                            nuevoEquipo = new AireAcondicionado(id, nombre,criticidad, enUso, incidenciasActivas, tiempoInactivo);
+                        } else if (tipo == "Grabadora") {
+                            nuevoEquipo = new Grabadoras(id, nombre,criticidad, enUso, incidenciasActivas, tiempoInactivo);
+                        } else if (tipo == "Camara") {
+                            nuevoEquipo = new Camaras(id, nombre,criticidad, enUso, incidenciasActivas, tiempoInactivo);
+                        } else {
+                            cout << "Tipo de equipo no reconocido. Intente nuevamente." << endl;
+                            --i; // Decrementar para repetir esta iteración
+                            continue;
+                        }
+
+                        simulador->agregarEquipo(nuevoEquipo);
+                    }
                     break;
-                case 2:
-                    cout << "Saliendo..."<<endl;
+                }
+
+                case 3:
+                    cout<<"-------- EJECUTANDO SIMULACION --------"<<endl;
+                    simulador->ejecutarSimulacion();
+                    menuFinal(simulador);
                     break;
+
+                case 4: {
+                    int id;
+                    string nuevoNombre;
+                    cout << "Ingrese el ID del tecnico que desea renombrar: ";
+                    cin >> id;
+                    cout << "Ingrese el nuevo nombre del tecnico: ";
+                    cin.ignore();
+                    getline(cin, nuevoNombre);
+                    simulador->cambiarNombreTecnico(id, nuevoNombre);
+                    break;
+                }
                 default:
                     throw "Opcion no valida";
             }
-        } catch(const char* msg) {
+        } catch (const char* msg) {
             cout << "Error: " << msg << endl;
             cin.clear();
             cin.ignore(1000, '\n');
+
         }
 
-    } while(op != 2);*/
-}
+  }
+
 
 void Menu::menuFinal(Simulador *simulador) {
     int op;
