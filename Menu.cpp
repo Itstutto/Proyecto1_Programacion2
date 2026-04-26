@@ -41,6 +41,7 @@ void Menu::menuPrincipal(Simulador* simulador) {
                     break;
                 }
                 case 2: {
+                    //primero pedir el tipo, luego los datos, y unir los datos en un stringstream, para que el metodo crearEquipo de Leer pueda crearlo
                     int cantidadEquipos;
                     cout << "Cuantos equipos desea ingresar? ";
                     cin >> cantidadEquipos;

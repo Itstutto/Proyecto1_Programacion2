@@ -25,6 +25,7 @@ ContenedorEquipos* Leer::cargarEquipos(const string &nombreArchivo) {
     string datos;
     string linea;
     stringstream buffer;
+    Equipo* equipo = nullptr;
     while (getline(archivo, linea)) {
         if (linea.empty()) {
             continue; // Saltar líneas vacías
@@ -37,16 +38,26 @@ ContenedorEquipos* Leer::cargarEquipos(const string &nombreArchivo) {
         if (!getline(buffer, datos)) {
             throw ErrorArchivoCorrupto("Archivo corrupto: no se pudo leer los datos del equipo");
         }
-        CreadorEquipos* creador = creadores->getCreador(tipo);
-        if (creador == nullptr) {
+        try {
+            equipo = crearEquipo(tipo, datos);
+        } catch (const exception& e) {
             delete contenedor;
-            throw ErrorArgumentoInvalido("No se posee un creador para el tipo de objeto "+tipo);
+            throw ErrorArchivoCorrupto("Archivo corrupto: " + string(e.what()));
         }
 
-        contenedor->agregarEquipo(creador->crearEquipos(datos));
+
+        contenedor->agregarEquipo(equipo);
 
     }
     return contenedor;
+}
+
+Equipo * Leer::crearEquipo(const string &tipo, const string &datos) {
+    CreadorEquipos* creador = creadores->getCreador(tipo);
+    if (creador == nullptr) {
+        throw ErrorArgumentoInvalido("No se posee un creador para el tipo de objeto "+tipo);
+    }
+    return creador->crearEquipos(datos);
 }
 
 void Leer::agregarCreador(CreadorEquipos *creador) {

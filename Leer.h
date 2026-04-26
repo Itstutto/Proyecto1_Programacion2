@@ -18,6 +18,7 @@ public:
     Leer();
     ~Leer();
     ContenedorEquipos* cargarEquipos(const string& nombreArchivo);
+    Equipo* crearEquipo(const string& tipo, const string& datos);
     void agregarCreador(CreadorEquipos* creador);
 };
 
