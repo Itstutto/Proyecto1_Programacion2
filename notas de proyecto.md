@@ -49,3 +49,5 @@ Menu inicial:
 2. Ingresar equipos manualmente
 3. Iniciar simulacion
 4. Cambiar nombre de tecnicos
+
+buscar error del id repetido, en contenedor de equipos. 

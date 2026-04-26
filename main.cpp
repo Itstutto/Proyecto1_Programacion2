@@ -51,7 +51,7 @@ int main() {
     }catch (const exception& e) {
         cerr << "Error: " << e.what() << endl;
     }
-*/
+*//*
     Archivos gestorArchivos;
     ContenedorEquipos* contenedor = nullptr;
     try {
@@ -61,10 +61,13 @@ int main() {
         cerr << "Error al cargar el archivo: " << e.what() << endl;
         return 1; // Salir con código de error
     }
-    cout<<" hola\n";
-    sim.ejecutarSimulacion();
+
+    //sim.ejecutarSimulacion();
+
+    //menu.menuFinal(&sim);
+    */
     Menu    menu;
-    menu.menuFinal(&sim);
+    menu.menuPrincipal(&sim);
 
 
     return 0;

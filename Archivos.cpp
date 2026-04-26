@@ -30,6 +30,14 @@ void Archivos::agregarGuardador(IGuardarReporte *nuevaEstrategia) {
     guardador.setGuardado(nuevaEstrategia);
 }
 
+Equipo * Archivos::crearEquipo(const string &tipo, const string &datos) {
+    Equipo* equipo = lector.crearEquipo(tipo, datos);
+    if (equipo == nullptr) {
+        throw ErrorArchivoCorrupto("El archivo está corrupto o no tiene el formato correcto");
+    }
+    return equipo;
+}
+
 ContenedorEquipos* Archivos::cargarEquipos(const string &nombreArchivo) {
     ContenedorEquipos* contenedor = lector.cargarEquipos(nombreArchivo);
     if (contenedor == nullptr) {

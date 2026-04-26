@@ -30,8 +30,10 @@ public:
     ~Archivos();
     void guardarArchivo(const string& reporte);
     void agregarGuardador(IGuardarReporte* nuevaEstrategia);
+    Equipo* crearEquipo(const string& tipo, const string& datos);
     ContenedorEquipos* cargarEquipos(const string& nombreArchivo);
     void agregarCreador(CreadorEquipos* creador);
+
 };
 
 
