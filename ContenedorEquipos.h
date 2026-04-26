@@ -20,6 +20,8 @@ public:
     ContenedorEquipos();
     ~ContenedorEquipos();
 
+    void liberarContenedor();
+
     int getCant();
 
     void agregarEquipo(Equipo* equipo);
@@ -30,7 +32,9 @@ public:
     string mostrarEquiposLista();
     string serializar();
 
+    void agregarEquipos(ContenedorEquipos* nuevoContenedor);
     void agregarDiaReporte();
+
 
     void ordenarPorPrioridad();
     void aumentarInactividad();

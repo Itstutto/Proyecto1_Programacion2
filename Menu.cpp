@@ -34,7 +34,7 @@ void Menu::menuPrincipal(Simulador* simulador) {
                     cin>>nombreArchivo;
                     try {
                         contenedor = gestorArchivos.cargarEquipos(nombreArchivo);
-                        simulador->setEquipos(contenedor);
+                        simulador->agregarEquipos(contenedor);
                     } catch (const exception& e) {
                         cerr << "Error al cargar el archivo: " << e.what() << endl;
                     }

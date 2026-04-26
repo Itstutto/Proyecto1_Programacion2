@@ -56,11 +56,12 @@ int main() {
     ContenedorEquipos* contenedor = nullptr;
     try {
         contenedor = gestorArchivos.cargarEquipos("equipos.txt");
-        sim.setEquipos(contenedor);
+        sim.agregarEquipos(contenedor);
     } catch (const exception& e) {
         cerr << "Error al cargar el archivo: " << e.what() << endl;
         return 1; // Salir con código de error
     }
+    cout<<" hola\n";
     sim.ejecutarSimulacion();
     Menu    menu;
     menu.menuFinal(&sim);

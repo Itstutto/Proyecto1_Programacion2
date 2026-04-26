@@ -5,6 +5,7 @@
 #include "Simulador.h"
 
 #include "ErrorArgumentoInvalido.h"
+#include "ErrorRepetido.h"
 
 Simulador::Simulador(int diasSimulacion, int totalIncidencias, double sensibilidad) {
     this->reporte = new string * [diasSimulacion+1];// +1 para incluir el estado final
@@ -45,15 +46,12 @@ string Simulador::getEquiposSerializados() {
     return contenedor->serializar();
 }
 
-void Simulador::setEquipos(ContenedorEquipos *nuevoContenedor) {
+void Simulador::agregarEquipos(ContenedorEquipos *nuevoContenedor) {
     if (simulacionEjecutada) {
         throw ErrorArgumentoInvalido("No se pueden cambiar los equipos después de ejecutar la simulación");
     }
-    if (nuevoContenedor == nullptr) {
-        throw ErrorPunteroNulo("El nuevo contenedor no puede ser nulo");
-    }
-    delete contenedor;
-    contenedor = nuevoContenedor;
+
+    contenedor->agregarEquipos(nuevoContenedor);
 }
 
 void Simulador::agregarEquipo(Equipo *equipo) {

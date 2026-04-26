@@ -19,12 +19,25 @@ ContenedorEquipos:: ContenedorEquipos() {
 }
 
 ContenedorEquipos::~ContenedorEquipos() {
+
     for (int i = 0; i < cant; i++) {
-        delete equipos[i];
+
+        if (equipos[i]) {
+            delete equipos[i];
+        }
         equipos[i] = nullptr;
     }
     delete[] equipos;
     equipos = nullptr;
+}
+
+void ContenedorEquipos::liberarContenedor() {
+    for (int i = 0; i < cant; i++) {
+        if (equipos[i]) {
+            equipos[i] = nullptr;
+        }
+    } // no los elimina porque se va a cambiar el dueño de los equipos
+     cant = 0;
 }
 
 int ContenedorEquipos::getCant() {
@@ -125,6 +138,31 @@ string ContenedorEquipos::serializar() {
     }
     return ss.str();
 }
+
+void ContenedorEquipos::agregarEquipos(ContenedorEquipos *nuevoContenedor) {
+    if (nuevoContenedor == nullptr) {
+        throw ErrorPunteroNulo("El nuevo contenedor no puede ser nulo");
+    }
+    //agregar equipos a contenedor ya existente
+    for (int i=0; i<nuevoContenedor->getCant(); i++) {
+
+        try {
+            agregarEquipo(nuevoContenedor->buscarEquipoIndice(i));
+        }catch (const ErrorRepetido& e) {//si esta repetido solo no se agrega
+        }catch (const ErrorEspacio& e) {
+            throw ErrorEspacio("No se pueden agregar más equipos, el contenedor está lleno, se han agredado "+to_string(i)+" equipos");
+        }
+    }
+
+    nuevoContenedor->liberarContenedor();
+
+    //reiniciar el nuevo contenedor para evitar problemas de doble eliminación
+    delete nuevoContenedor;
+
+    nuevoContenedor = nullptr;
+}
+
+
 
 void ContenedorEquipos::agregarDiaReporte() {
     for (int i = 0; i < cant; i++) {

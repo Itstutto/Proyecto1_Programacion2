@@ -41,7 +41,7 @@ public:
 
     string getListaEquipos();
     string getEquiposSerializados();
-    void setEquipos(ContenedorEquipos* nuevoContenedor);
+    void agregarEquipos(ContenedorEquipos* nuevoContenedor);
 
     void agregarEquipo(Equipo* equipo);
     void agregarPersona(PersonaMantenimiento* persona);
