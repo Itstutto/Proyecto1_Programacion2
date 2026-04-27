@@ -7,21 +7,22 @@
 #include<iostream>
 #include<string>
 #include"Simulador.h"
+#include "MenuSimulacion.h"
+#include "MenuReportes.h"
+#include "SalidaReporte.h"
 
 using namespace std;
 
 class Menu {
+private:
+    SalidaReporte salidaReporte;
+    MenuSimulacion menuSimulacion;
+    MenuReportes menuReportes;
 public:
+    Menu();
     void menuPrincipal(Simulador* simulador);
     void menuFinal(Simulador* simulador);
-private:
-    void menuReportes(Simulador* simulador);
 
-    void reporteTotal(Simulador* simulador);
-    void reporteRangoDias(Simulador* simulador);
-    void reporteEquipos(Simulador* simulador);
-
-    void generarSalida(string contenido);
 };
 
 

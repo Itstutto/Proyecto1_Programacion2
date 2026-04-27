@@ -75,6 +75,12 @@ add_executable(Proyecto1 main.cpp
         GuardarEnConsola.h
         Guardar.cpp
         Guardar.h
+        SalidaReporte.cpp
+        SalidaReporte.h
+        MenuSimulacion.cpp
+        MenuSimulacion.h
+        MenuReportes.cpp
+        MenuReportes.h
         Menu.cpp
         Menu.h
         Leer.cpp

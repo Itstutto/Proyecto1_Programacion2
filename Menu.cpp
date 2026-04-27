@@ -1,355 +1,76 @@
-//
-// Created by yense on 4/25/2026.
-//
-
-#include "Menu.h"
-
-#include "DecoradorRE.h"
-#include "ErrorArgumentoInvalido.h"
-#include"GuardarEnArchivoTexto.h"
-#include"GuardarEnConsola.h"
-#include "IReporte.h"
-#include "ReporteEquipos.h"
-#include "FabricaConvertidores.h"
-#include "Convertidores.h"
+﻿#include "Menu.h"
+#include "ErrorNoEncontrado.h"
+Menu::Menu() : menuReportes(salidaReporte) {
+}
 void Menu::menuPrincipal(Simulador* simulador) {
-    int op1 =0;
-    Archivos gestorArchivos;
-  while (op1 != -1) {
-      cout << "--- SIMULACION ---" << endl;
-      cout << "1. Cargar equipos desde archivos "<<endl;
-      cout << "2. Ingresar equipos manualmente "<<endl;
-      cout << "3. Ejecutar Simulacion" << endl;
-      cout << "4. Cambiar nombre de tecnico"<<endl;
-
-      cout << "Seleccione: ";
-      cin >> op1;
-
-      try {
-          if (cin.fail()) throw "Entrada invalida";
-          switch (op1) {
-              case 1: {
-
-                  ContenedorEquipos* contenedor = nullptr;
-                  string nombreArchivo;
-                  cout<<"En que archivo se encuentran los equipos?"<<endl;
-                  cin>>nombreArchivo;
-                  try {
-                      contenedor = gestorArchivos.cargarEquipos(nombreArchivo);
-                      simulador->agregarEquipos(contenedor);
-                      cout<<"Equipos cargados exitosamente desde el archivo: " << nombreArchivo << endl;
-                  } catch (const exception& e) {
-                      cerr << "Error al cargar el archivo: " << e.what() << endl;
-                  }
-                  break;
-              }
-              case 2: {
-                  //primero pedir el tipo, luego los datos, y unir los datos en un stringstream, para que el metodo crearEquipo de Leer pueda crearlo
-                  int cantidadEquipos;
-                  cout << "Cuantos equipos desea ingresar? ";
-                  cin >> cantidadEquipos;
-                  cin.ignore(); // Limpiar el buffer
-
-                  for (int i = 0; i < cantidadEquipos; ++i) {
-                      string tipo, nombre;
-                      int id, incidenciasActivas, tiempoInactivo, criticidad;
-                      bool enUso;
-                      try {
-                          cout << "Ingrese el tipo de equipo (Servidor, Laptop, ComputadoraEscritorio, AireAcondicionado, Grabadora, Camara): ";
-                          getline(cin, tipo);
-                          cout << "Ingrese el ID del equipo: ";
-                          cin >> id;
-                          if (cin.fail()) {
-                              throw ErrorArgumentoInvalido("ID debe ser un numero entero");
-                          }
-
-
-
-                          cout << "Ingrese el nombre del equipo: ";
-                          cin.ignore();
-                          getline(cin, nombre);
-
-                          cout << "Ingrese las incidencias del equipo: ";
-                          cin >> incidenciasActivas;
-                          if (cin.fail()) {
-                                throw ErrorArgumentoInvalido("Incidencias activas debe ser un numero entero");
-                          }
-
-                          cout << "Ingrese el tiempo inactivo del equipo: ";
-                          cin >> tiempoInactivo;
-                          if (cin.fail()) {
-                              throw ErrorArgumentoInvalido("Tiempo inactivo debe ser un numero entero");
-                          }
-
-                          cout << "Ingrese la criticidad del equipo: ";
-                          cin >> criticidad;
-                          if (cin.fail()) {
-                              throw ErrorArgumentoInvalido("Criticidad debe ser un numero entero");
-                          }
-
-                          cout<<"Ingrese si el equipo esta en uso (1 para si, 0 para no): ";
-                          cin >> enUso;
-                          if (cin.fail() || (enUso != 0 && enUso != 1)) {
-                              throw ErrorArgumentoInvalido("En uso debe ser 1 para si o 0 para no");
-                          }
-                          cin.ignore(); // Limpiar el buffer para la siguiente iteracion
-
-                      } catch (const exception& e) {
-                          cout << "Error en la entrada: " << e.what() << endl<<endl;
-                          cin.clear();
-                          cin.ignore(1000, '\n');
-                          i--; // Decrementar el contador para permitir reingresar el equipo
-                          continue; // Saltar a la siguiente iteracion
-                      }
-                      Equipo* nuevoEquipo = nullptr;
-
-                      stringstream ss;
-                      ss<<id<<","<<nombre<<","<<criticidad<<","<<enUso<<","<<incidenciasActivas<<","<<tiempoInactivo;
-                      try {
-                          nuevoEquipo = gestorArchivos.crearEquipo(tipo, ss.str());
-                          simulador->agregarEquipo(nuevoEquipo);
-                      } catch (const exception& e) {
-                          cerr << "Error al crear el equipo: " << e.what() << endl;
-                          i--; // Decrementar el contador para permitir reingresar el equipo
-                          continue; // Saltar a la siguiente iteracion
-                      }
-
-                  }
-                  break;
-              }
-
-              case 3: {
-                  cout<<"-------- EJECUTANDO SIMULACION --------"<<endl;
-
-
-                  try {
-                    simulador->ejecutarSimulacion();
-                  } catch (const ErrorNoEncontrado& e) {
-                      cout <<"No se puede iniciar la simulacion sin al menos un equipo: " << endl;
-                      cout<<e.what()<<endl;
-                      break;
-                  }
-
-                  menuFinal(simulador);
-                  op1 = -1; // Salir del menu principal despues de ejecutar la simulacion
-                  break;
-              }
-
-              case 4: {
-                  int id;
-                  string nuevoNombre;
-                  cout<<simulador->getListaPersonas()<<endl;
-                  cout << "Ingrese el ID del tecnico que desea renombrar: ";
-                  cin >> id;
-                  cout << "Ingrese el nuevo nombre del tecnico: ";
-                  cin.ignore();
-                  getline(cin, nuevoNombre);
-                  try {
-                      simulador->cambiarNombreTecnico(id, nuevoNombre);
-                  }catch (const ErrorArgumentoInvalido& e) {
-                      cout << "Error: " << e.what() << endl;
-                  }
-                  break;
-              }
-              default:
-                  throw "Opcion no valida";
-          }
-      } catch (const char* msg) {
-          cout <<endl<< "Error: " << msg << endl;
-          cin.clear();
-          cin.ignore(1000, '\n');
-
-      }
-  }
-  }
-
-
-void Menu::menuFinal(Simulador *simulador) {
-    int op;
-
-    do {
-        cout << "--- MENU ---"<<endl;
-        cout << "1. Generar Reporte"<<endl;
-        cout << "2. Salir"<<endl;
+    int op1 = 0;
+    while (op1 != -1) {
+        cout << "--- SIMULACION ---" << endl;
+        cout << "1. Cargar equipos desde archivos" << endl;
+        cout << "2. Ingresar equipos manualmente" << endl;
+        cout << "3. Ejecutar Simulacion" << endl;
+        cout << "4. Cambiar nombre de tecnico" << endl;
         cout << "Seleccione: ";
-        cin >> op;
-        cout<<endl<<endl;
-
-
+        cin >> op1;
         try {
-
             if (cin.fail()) throw "Entrada invalida";
-
-            switch(op) {
+            switch (op1) {
                 case 1:
-                    menuReportes(simulador);
+                    menuSimulacion.cargarEquiposDesdeArchivo(simulador);
                     break;
                 case 2:
-                    cout << "Saliendo..."<<endl;
+                    menuSimulacion.ingresarEquiposManualmente(simulador);
+                    break;
+                case 3:
+                    cout << "-------- EJECUTANDO SIMULACION --------" << endl;
+                    try {
+                        simulador->ejecutarSimulacion();
+                    } catch (const ErrorNoEncontrado& e) {
+                        cout << "No se puede iniciar la simulacion sin al menos un equipo: " << endl;
+                        cout << e.what() << endl;
+                        break;
+                    }
+                    menuFinal(simulador);
+                    op1 = -1;
+                    break;
+                case 4:
+                    menuSimulacion.cambiarNombreTecnico(simulador);
                     break;
                 default:
                     throw "Opcion no valida";
             }
-        } catch(const char* msg) {
-            cout << "Error: " << msg << endl;
+        } catch (const char* msg) {
+            cout << endl << "Error: " << msg << endl;
             cin.clear();
             cin.ignore(1000, '\n');
         }
-
-    } while(op != 2);
+    }
 }
-
-void Menu::menuReportes(Simulador* simulador) {
-    char op;
-
+void Menu::menuFinal(Simulador* simulador) {
+    int op;
     do {
-        cout << "--- REPORTES ---"<<endl;
-        cout << "a. Reporte total"<<endl;
-        cout << "b. Reporte rango de dias"<<endl;
-        cout << "c. Reporte de equipo"<<endl;
-        cout << "d. Volver"<<endl;
+        cout << "--- MENU ---" << endl;
+        cout << "1. Generar Reporte" << endl;
+        cout << "2. Salir" << endl;
         cout << "Seleccione: ";
         cin >> op;
-
+        cout << endl << endl;
         try {
-            switch(op) {
-                case 'a': reporteTotal(simulador); break;
-                case 'b': reporteRangoDias(simulador); break;
-                case 'c': reporteEquipos(simulador); break;
-                case 'd': break;
-                default: throw "Opcion invalida";
+            if (cin.fail()) throw "Entrada invalida";
+            switch (op) {
+                case 1:
+                    menuReportes.menuReportes(simulador);
+                    break;
+                case 2:
+                    cout << "Saliendo..." << endl;
+                    break;
+                default:
+                    throw "Opcion no valida";
             }
-        } catch(const char* msg) {
+        } catch (const char* msg) {
             cout << "Error: " << msg << endl;
-        }
-
-    } while(op != 'd');
-}
-
-
-void Menu::reporteTotal(Simulador* simulador) {
-
-    generarSalida(simulador->generarReporte());
-
-}
-
-void Menu::reporteRangoDias(Simulador* simulador) {
-    int inicio, final;
-    char inc, rep, estado;
-    bool incluirIncidencias, incluirReparaciones, incluirEstado;
-  string reporte;
-
-    cin.ignore();
-
-    cout << "Ingrese el dia inicial : ";
-    cin>> inicio;
-
-    cout<<"Ingrese el dia final : ";
-    cin>> final;
-
-    cout << "Incluir incidencias? (s/n): ";
-    cin >> inc;
-    incluirIncidencias = (inc == 's' || inc == 'S');
-
-    cout << "Incluir reparaciones? (s/n): ";
-    cin >> rep;
-    incluirReparaciones = (rep == 's' || rep == 'S');
-
-    cout << "Incluir estado diario? (s/n): ";
-    cin >> estado;
-    incluirEstado = (estado == 's' || estado == 'S');
-    try {
-        reporte = simulador->getReporteRangoDias(inicio,final,incluirIncidencias, incluirReparaciones, incluirEstado);
-        generarSalida(reporte);
-    }catch (const ErrorArgumentoInvalido& e) {
-        cout << "Error: " << e.what() << endl;
-    }
-
-}
-
-void Menu::reporteEquipos(Simulador* simulador) {
-    char op = ' ';
-    while (op != 'c') {
-        cout<<"a. Crear reporte de uno (o varios) equipos especificos"<<endl;
-        cout<<"b. Crear reporte de un tipo de equipo especifico"<<endl;
-        cout<<"c. Volver"<<endl;
-        cout<<"Seleccione: ";
-        cin >> op;
-        if (cin.fail()) {
-            cout << "Entrada invalida" << endl;
             cin.clear();
             cin.ignore(1000, '\n');
-            return;
         }
-
-    switch (op) {
-    case 'a' :{
-        IReporte* reporteBase = new ReporteEquipos();
-        IReporte* reporteDecorado;
-        cout<< simulador->getListaEquipos()<<endl;
-        cout<<"----------------------Se genererara un reporte con todos los equipos que seleccione----------------------------"<<endl;
-        int id = 0;
-        while (id != -1) {
-
-            cout<< "Ingrese el ID del equipo que desea agregar al reporte (o -1 para salir): ";
-            cin >> id;
-            try {
-                reporteDecorado = new DecoradorRE(simulador->getReporteEquipo(id), reporteBase);
-                reporteBase = reporteDecorado; // El nuevo reporte decorado se convierte en la base para el siguiente
-            } catch (const ErrorNoEncontrado& e) {
-                cout << "Error: " << e.what() << endl;
-            }
-        }
-            generarSalida(reporteBase->generarReporte());
-            delete reporteBase; // Esto eliminara todos los decoradores encadenados
-            break;
-    }
-    case 'b': {
-
-            string tipo;
-            cout << "Ingrese el tipo de equipo que desea agregar al reporte (Servidor, Laptop, ComputadoraEscritorio, AireAcondicionado, Grabadora, Camara): ";
-            cin >> tipo;
-            try {
-                string reporte = simulador->getReporteTipoEquipo(tipo);
-                generarSalida(reporte);
-            } catch (const ErrorNoEncontrado& e) {
-                cout << "Error: " << e.what() << endl;
-            }
-             break;
-
-    }
-    default:
-        break;
-    }
-    }
-
-}
-
-void Menu::generarSalida(string contenido) {
-    Archivos gestorArchivos;
-    IGuardarReporte* guardador;
-
-    char op;
-    cout<<"Elija el formato de salida: "<<endl;
-    cout<<"a. Consola"<<endl;
-    cout<<"b. Archivo de texto"<<endl;
-    cout<<"Seleccione: ";
-    cin >> op;
-    switch (op) {
-        case 'a':
-            guardador = new GuardarEnConsola();
-            break;
-        case 'b': {
-            string nombreArchivo;
-            cout << "Ingrese el nombre del archivo: ";
-            cin >> nombreArchivo;
-            guardador = new GuardarEnArchivoTexto(nombreArchivo);
-            break;
-        }
-        default:
-            cout << "Opcion invalida, se usara consola por defecto." << endl;
-            guardador = new GuardarEnConsola();
-    }
-    gestorArchivos.agregarGuardador(guardador);
-    gestorArchivos.guardarArchivo(contenido);
+    } while (op != 2);
 }
