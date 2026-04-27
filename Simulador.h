@@ -53,6 +53,7 @@ public:
 
     string getReporteDia(int dia, bool incluirIncidencias = false, bool incluirReparaciones = false, bool incluirEstadoEquipos = false);
     string getReporteRangoDias(int diaInicio, int diaFin, bool incluirIncidencias = true, bool incluirReparaciones = true, bool incluirEstadoEquipos = false);
+    string getReporteTipoEquipo(string tipo);
 
     IReporteDelDia* getReporteEquipo(int idEquipo);
 

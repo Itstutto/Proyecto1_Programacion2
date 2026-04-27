@@ -16,7 +16,7 @@ public:
     ~ContenedorDePersonas();
     void agregarPersona(PersonaMantenimiento* persona);
     PersonaMantenimiento* getPersona(const int indice);
-
+    void nuevoDiaPersonas();
 
 };
 

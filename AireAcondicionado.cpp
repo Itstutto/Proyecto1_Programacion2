@@ -8,17 +8,24 @@ AireAcondicionado::AireAcondicionado(): Equipo() {
 }
 
 AireAcondicionado::AireAcondicionado(int id, string const &nombre, int criticidad, bool enUso, int incidenciasActivas, int tiempoInactivo): Equipo(id, nombre, incidenciasActivas, tiempoInactivo, criticidad, enUso) {
-    //Si la criticidad no está entre 5 y 8, ajustarla (si es menor a 5 ponerla en 5, si es mayor a 8 ponerla en 8
+    //Si la criticidad no esta entre 5 y 8, ajustarla (si es menor a 5 ponerla en 5, si es mayor a 8 ponerla en 8
     if (criticidad <5) {
         this->criticidad = 5;
     } else if (criticidad > 8) {
         this->criticidad = 8;
 
-        //Si el aire acondicionado no está en uso, ajustar el tiempo inactivo a 0 y bajar 5 puntos de criticidad (en este caso si se puede tener una criticidad menor a 5, ya que el aire acondicionado no está en uso)
+        //Si el aire acondicionado no esta en uso, ajustar el tiempo inactivo a 0 y bajar 5 puntos de criticidad (en este caso si se puede tener una criticidad menor a 5, ya que el aire acondicionado no esta en uso)
     } if (!enUso) {
         this->tiempoInactivo = 0;
         this->criticidad = this->criticidad-5;
     }
+}
+
+void AireAcondicionado::degradar() {
+    estado -= 0.3 + (0.3 * getIncidenciasActivas()) + (0.1 * getTiempoInactivo());
+     if (estado < 0) {
+         estado = 0;
+     }
 }
 
 string AireAcondicionado::toString() {

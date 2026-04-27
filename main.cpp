@@ -59,7 +59,7 @@ int main() {
         sim.agregarEquipos(contenedor);
     } catch (const exception& e) {
         cerr << "Error al cargar el archivo: " << e.what() << endl;
-        return 1; // Salir con código de error
+        return 1; // Salir con codigo de error
     }
 
     //sim.ejecutarSimulacion();

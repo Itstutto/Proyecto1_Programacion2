@@ -28,13 +28,16 @@ public:
     void eliminarEquipo(int id);
     Equipo* buscarEquipo(int id);
     Equipo* buscarEquipoIndice(int indice);
+
     string mostrarEquipos();
     string mostrarEquiposLista();
     string serializar();
+    string tresEquiposMasPrioritarios();
+    string reporteTipoEquipo(string tipo);
 
     void agregarEquipos(ContenedorEquipos* nuevoContenedor);
-    void agregarDiaReporte();
 
+    void nuevoDiaEquipos();
 
     void ordenarPorPrioridad();
     void aumentarInactividad();

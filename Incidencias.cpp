@@ -24,7 +24,7 @@ Incidencias::Incidencias(int incidenciasRestantes, int plazo, double sensibilida
     }
     //la sensibilidad se traduce en un numero entre 95 y 50, a mayor sensibilidad, mayor posibilidad de
     //que haya una incidencia, se puede usar para simular diferentes escenarios, por ejemplo, si se
-    //tiene equipos muy sensibles, se puede aumentar la sensibilidad para simular que son más propenso
+    //tiene equipos muy sensibles, se puede aumentar la sensibilidad para simular que son mas propenso
     //a tener incidencias
 }
 

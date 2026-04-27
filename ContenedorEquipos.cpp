@@ -4,9 +4,12 @@
 
 #include "ContenedorEquipos.h"
 
+#include "Convertidor.h"
+#include "Convertidores.h"
 #include "ErrorNoEncontrado.h"
 #include "ErrorPunteroNulo.h"
 #include "ErrorRepetido.h"
+#include "FabricaConvertidores.h"
 
 ContenedorEquipos:: ContenedorEquipos() {
     tam=100;
@@ -36,7 +39,7 @@ void ContenedorEquipos::liberarContenedor() {
         if (equipos[i]) {
             equipos[i] = nullptr;
         }
-    } // no los elimina porque se va a cambiar el dueño de los equipos
+    } // no los elimina porque se va a cambiar el dueno de los equipos
      cant = 0;
 }
 
@@ -46,15 +49,16 @@ int ContenedorEquipos::getCant() {
 
 void ContenedorEquipos::agregarEquipo(Equipo *equipo) {
         if (cant >= tam) {
-            throw ErrorEspacio("El contenedor de equipos está lleno");
+            throw ErrorEspacio("El contenedor de equipos esta lleno");
         }
-        try {
-            buscarEquipo(equipo->getId());
+
+        if (buscarEquipo(equipo->getId())) {
             throw ErrorRepetido("Ya existe un equipo con el ID proporcionado");
-        } catch (const ErrorNoEncontrado& e) {
-            //Si no se encuentra el equipo, se puede agregar
         }
+
+        //Si no se encuentra el equipo, se puede agregar
         equipos[cant++] = equipo;
+
 
 }
 
@@ -63,7 +67,7 @@ void ContenedorEquipos::eliminarEquipo(int id) {
         if (equipos[i]->getId() == id) {
             delete equipos[i];
             equipos[i] = nullptr;
-            //Mover los equipos restantes para llenar el espacio vacío
+            //Mover los equipos restantes para llenar el espacio vacio
             for (int j = i; j < cant - 1; j++) {
                 equipos[j] = equipos[j + 1];
             }
@@ -71,7 +75,7 @@ void ContenedorEquipos::eliminarEquipo(int id) {
             return;
         }
     }
-     throw ErrorNoEncontrado("No se encontró un equipo con el ID proporcionado");
+     throw ErrorNoEncontrado("No se encontro un equipo con el ID proporcionado");
 
 }
 
@@ -97,15 +101,15 @@ Equipo * ContenedorEquipos::buscarEquipo(int id) {
             derecha = medio - 1;
         }
     }
-     throw ErrorNoEncontrado("No se encontró un equipo con el ID proporcionado");
+     return nullptr; // No se encontro el equipo, se devuelve nullptr para que el llamador pueda manejarlo
 }
 
 Equipo * ContenedorEquipos::buscarEquipoIndice(int indice) {
     if (indice < 0 || indice >= cant) {
-        throw ErrorNoEncontrado("Índice fuera de rango");
+        throw ErrorNoEncontrado("Indice fuera de rango");
     }
     if (!equipos[indice]) {
-        throw ErrorPunteroNulo("No se encontró un equipo en el índice proporcionado");
+        throw ErrorPunteroNulo("No se encontro un equipo en el indice proporcionado");
     }
     return equipos[indice];
 }
@@ -139,6 +143,40 @@ string ContenedorEquipos::serializar() {
     return ss.str();
 }
 
+string ContenedorEquipos::tresEquiposMasPrioritarios() {
+    //ordenar por prioridad y mostrar los 3 primeros
+    ordenarPorPrioridad();
+    stringstream ss;
+    ss<<"Los 3 equipos con mayor prioridad de atencion son:"<<endl;
+    for (int i = 0; i < 3 && i < cant; i++) {
+        ss<<"Equipo #"<<i+1<<endl;
+        ss << equipos[i]->infoBasica() << endl;
+        ss<<"----------------------------------------------"<<endl;
+    }
+    return ss.str();
+}
+
+string ContenedorEquipos::reporteTipoEquipo(string tipo) {
+    Convertidores convertidores;
+    FabricaConvertidores::cargarConvertidores(&convertidores);
+    Convertidor* convertidor = convertidores.getConvertidor(tipo);
+    if (!convertidor) {
+        throw ErrorNoEncontrado("No se encontro un convertidor para el tipo de equipo proporcionado");
+    }
+    stringstream ss;
+    Equipo* equipoConvertido;
+    ss<<"Reporte de equipos del tipo "<<tipo<<":"<<endl;
+    for (int i = 0; i < cant; i++) {
+        equipoConvertido = convertidor->convertirEquipo(equipos[i]);
+        if (equipoConvertido) {
+            ss<<"Equipo #"<<i+1<<endl;
+            ss << equipoConvertido->generarReporte() << endl;
+            ss<<"----------------------------------------------"<<endl;
+        }
+    }
+    return ss.str();
+}
+
 void ContenedorEquipos::agregarEquipos(ContenedorEquipos *nuevoContenedor) {
     if (nuevoContenedor == nullptr) {
         throw ErrorPunteroNulo("El nuevo contenedor no puede ser nulo");
@@ -148,15 +186,16 @@ void ContenedorEquipos::agregarEquipos(ContenedorEquipos *nuevoContenedor) {
 
         try {
             agregarEquipo(nuevoContenedor->buscarEquipoIndice(i));
-        }catch (const ErrorRepetido& e) {//si esta repetido solo no se agrega
+        }catch (const ErrorRepetido& e) {
+            cout<<"Esta repetido uno";//si esta repetido solo no se agrega
         }catch (const ErrorEspacio& e) {
-            throw ErrorEspacio("No se pueden agregar más equipos, el contenedor está lleno, se han agredado "+to_string(i)+" equipos");
+            throw ErrorEspacio("No se pueden agregar mas equipos, el contenedor esta lleno, se han agredado "+to_string(i)+" equipos");
         }
     }
 
     nuevoContenedor->liberarContenedor();
 
-    //reiniciar el nuevo contenedor para evitar problemas de doble eliminación
+    //reiniciar el nuevo contenedor para evitar problemas de doble eliminacion
     delete nuevoContenedor;
 
     nuevoContenedor = nullptr;
@@ -164,9 +203,11 @@ void ContenedorEquipos::agregarEquipos(ContenedorEquipos *nuevoContenedor) {
 
 
 
-void ContenedorEquipos::agregarDiaReporte() {
+
+
+void ContenedorEquipos::nuevoDiaEquipos() {
     for (int i = 0; i < cant; i++) {
-        equipos[i]->agregarDiaReporte();
+        equipos[i]->nuevoDia();
     }
 }
 

@@ -10,18 +10,25 @@ Servidores::Servidores() : Equipo() {
 
 Servidores::Servidores(int id, string const &nombre, int criticidad, bool enUso, int incidenciasActivas, int tiempoInactivo) : Equipo(id, nombre, incidenciasActivas, tiempoInactivo, criticidad, enUso){
 
-    //Si la criticidad no está entre 8 y 10, ajustarla (si es menor a 8 ponerla en 8, si es mayor a 10 ponerla en 10)
+    //Si la criticidad no esta entre 8 y 10, ajustarla (si es menor a 8 ponerla en 8, si es mayor a 10 ponerla en 10)
     if (criticidad < 8) {
         this->criticidad = 8;
     } else if (criticidad > 10) {
         this->criticidad = 10;
     }
 
-    //Si el servidor no está en uso, ajustar el tiempo inactivo a 0 y bajar 5 puntos de criticidad (en este caso si se puede tener una criticidad menor a 8, ya que el servidor no está en uso)
+    //Si el servidor no esta en uso, ajustar el tiempo inactivo a 0 y bajar 5 puntos de criticidad (en este caso si se puede tener una criticidad menor a 8, ya que el servidor no esta en uso)
     if (!enUso) {
         this->tiempoInactivo = 0;
         this->criticidad = this->criticidad-5;
     }
+}
+
+void Servidores::degradar() {
+    estado -= 0.5 + (0.3 * getIncidenciasActivas()) + (0.2 * getTiempoInactivo());
+     if (estado < 0) {
+         estado = 0;
+     }
 }
 
 string Servidores::toString() {

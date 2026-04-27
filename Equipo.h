@@ -11,6 +11,8 @@
 #include <sstream>
 using namespace std;
 
+class PersonaMantenimiento;
+
 class Equipo : public IReporteDelDia{
 protected:
     int id;
@@ -20,6 +22,7 @@ protected:
     int tiempoInactivo;
     int criticidad;
     bool enUso;
+    double estado; // empieza siempre en 100, baja con el pasar del tiempo sin ser atendido, incidencias, entre otros
     //si el equipo esta siendo utilizado, si es false no aumenta tiempo inactivo y se baja criticidad
     //(es menos critico en una oficina un equipo que no se usa)
     bool danado;
@@ -45,17 +48,21 @@ public:
     void setId(int id);
     void setNombre(string const &nombre);
 
+
     void agregarIncidencia();
-    void reparar();
+    void reparar(PersonaMantenimiento* persona);
 
     void agregarTiempoInactivo();
     void eliminarTiempoInactivo();
 
     void agregarDiaReporte();
 
+    void nuevoDia();
+
     void setCriticidad(int criticidad);
     void setUso(bool enUso);
 
+    virtual void degradar() = 0;
     virtual  string toString() = 0;
     virtual string serializar() = 0;
 

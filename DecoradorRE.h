@@ -15,7 +15,7 @@ public:
         this->reporteEquipo = reporteEquipo;
     }
 
-    ~DecoradorRE() = default; //Esto guarda un equipo dentro de reporteEquipo, no es dueño de ese equipo, por lo que no debe eliminarlo
+    ~DecoradorRE() = default; //Esto guarda un equipo dentro de reporteEquipo, no es dueno de ese equipo, por lo que no debe eliminarlo
 
     string generarReporte() override {
         return reporteEquipo->generarReporte() + reporte->generarReporte();

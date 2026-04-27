@@ -48,7 +48,7 @@ string Simulador::getEquiposSerializados() {
 
 void Simulador::agregarEquipos(ContenedorEquipos *nuevoContenedor) {
     if (simulacionEjecutada) {
-        throw ErrorArgumentoInvalido("No se pueden cambiar los equipos después de ejecutar la simulación");
+        throw ErrorArgumentoInvalido("No se pueden cambiar los equipos despues de ejecutar la simulacion");
     }
 
     contenedor->agregarEquipos(nuevoContenedor);
@@ -69,11 +69,11 @@ void Simulador::cambiarNombreTecnico(int indice, string nuevoNombre) {
 }
 
 void Simulador::ejecutarSimulacion() {
-    stringstream s;
+    stringstream s; //para generar los reportes diarios
     for (int i=0; i<diasSimulacion; i++) {
 
-        contenedor->agregarDiaReporte();
-
+        contenedor->nuevoDiaEquipos();
+        contenedorPersonas->nuevoDiaPersonas();
         s.clear();
         s.str("");
 
@@ -91,15 +91,24 @@ void Simulador::ejecutarSimulacion() {
         s.clear();
         s.str("");
 
-        contenedor->ordenarPorPrioridad();
+
         s<<"Tres equipos mas criticos:"<<endl;
+        s<<contenedor->tresEquiposMasPrioritarios()<<endl;
+
+
         for (int j=0, k = 0; k<3 && j<contenedor->getCant(); j++) {
-            s<<"PRIORIDAD "<<contenedor->buscarEquipoIndice(j)->prioridad()<<endl;
-            s<<contenedor->buscarEquipoIndice(j)->infoBasica()<<endl;
             if (reparacion->repararEquipo(contenedor->buscarEquipoIndice(j),contenedorPersonas->getPersona(k))) {
                 k++;
+                s<<reparacion->generarReporte()<<endl;
+            }else {
+                s<<reparacion->generarReporte()<<endl;
+                if (contenedor->buscarEquipoIndice(j+1)) {
+                    s<<"El siguiente equipo a revisar es: "<<contenedor->buscarEquipoIndice(j+1)->infoBasica()<<endl;
+                }
+                else {
+                    s<<"No hay mas equipos para revisar hoy"<<endl;
+                }
             }
-            s<<reparacion->generarReporte()<<endl;
         }
 
         contenedor->aumentarInactividad();
@@ -118,7 +127,7 @@ void Simulador::ejecutarSimulacion() {
 string Simulador::getReporteDia(int dia, bool incluirIncidencias, bool incluirReparaciones, bool incluirEstadoEquipos) {
 
     if (dia < 0 || dia > diasSimulacion) {
-        throw ErrorArgumentoInvalido("Día fuera de rango");
+        throw ErrorArgumentoInvalido("Dia fuera de rango");
     }
 
 
@@ -144,7 +153,7 @@ string Simulador::getReporteRangoDias(int diaInicio, int diaFin, bool incluirInc
     bool incluirEstadoEquipos) {
     stringstream s;
     if (diaInicio < 0 || diaFin > diasSimulacion || diaInicio > diaFin) {
-        throw ErrorArgumentoInvalido("Rango de días inválido");
+        throw ErrorArgumentoInvalido("Rango de dias invalido");
     }
 
     for (int i=diaInicio; i<=diaFin; i++) {
@@ -153,10 +162,14 @@ string Simulador::getReporteRangoDias(int diaInicio, int diaFin, bool incluirInc
     return s.str();
 }
 
+string Simulador::getReporteTipoEquipo(string tipo) {
+    return contenedor->reporteTipoEquipo(tipo);
+}
+
 IReporteDelDia * Simulador::getReporteEquipo(int idEquipo) {
     Equipo* equipo = contenedor->buscarEquipo(idEquipo);
     if (!equipo) {
-        throw ErrorNoEncontrado("No se encontró un equipo con el ID proporcionado");
+        throw ErrorNoEncontrado("No se encontro un equipo con el ID proporcionado");
     }
     return equipo;
 }

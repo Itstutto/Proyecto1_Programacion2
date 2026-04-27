@@ -24,6 +24,7 @@ public:
     Camaras(int id, string const &nombre, int criticidad = 0, bool enUso = false, int incidenciasActivas = 0, int tiempoInactivo = 0);
     ~Camaras() override = default;
 
+    void degradar() override;
     string toString() override;
     string serializar() override;
 

@@ -5,7 +5,8 @@
 #include "Equipo.h"
 
 #include <cstring>
-
+#include <iomanip>
+#include "PersonaMantenimiento.h"
 #include "ErrorContradiccion.h"
 
 Equipo::Equipo() {
@@ -15,6 +16,7 @@ Equipo::Equipo() {
     tiempoInactivo = 0;
     criticidad = 0;
     enUso = false;
+    estado = 100;
     danado = false;
     reporte = new string[1];
     diasReporte = 0;
@@ -30,7 +32,7 @@ Equipo::Equipo(int id, string const &nombre, int incidenciasActivas, int tiempoI
     }
     strncpy(this->nombre, nombre.c_str(), sizeof(this->nombre) - 1);
     if (incidenciasActivas < 0) {
-        throw invalid_argument("El número de incidencias activas no puede ser negativo");
+        throw invalid_argument("El numero de incidencias activas no puede ser negativo");
     }
     this->incidenciasActivas = incidenciasActivas;
     if (tiempoInactivo < 0) {
@@ -46,6 +48,7 @@ Equipo::Equipo(int id, string const &nombre, int incidenciasActivas, int tiempoI
     danado = false;
     reporte = new string[1];
     diasReporte = 0;
+    estado = 100;
 }
 
 float Equipo::prioridad() {
@@ -95,6 +98,8 @@ void Equipo::setNombre(string const &nombre) {
     strncpy(this->nombre, nombre.c_str(), sizeof(this->nombre) - 1);
 }
 
+
+
 void Equipo::agregarIncidencia() {
     stringstream s;
     incidenciasActivas++;
@@ -111,15 +116,23 @@ void Equipo::agregarIncidencia() {
 
 }
 
-void Equipo::reparar() {
+void Equipo::reparar(PersonaMantenimiento* persona) {
+    stringstream s;
     incidenciasActivas = 0; //al reparar se reparan todas sus incidencias
     if (danado) danado = false;
+
+    estado += 30; //al reparar se recupera un 30% del estado del equipo
+    if (estado > 100) {
+        estado = 100;
+    }
+
     eliminarTiempoInactivo();
+    s<<"El equipo ha sido reparado por "<<persona->getNombre()<<endl;
 }
 
 void Equipo::agregarTiempoInactivo() {
     if (!danado) {
-        throw ErrorContradiccion("No se puede agregar tiempo inactivo a un equipo que no esta dañado");
+        throw ErrorContradiccion("No se puede agregar tiempo inactivo a un equipo que no esta danado");
     }
     tiempoInactivo+=24;
 }
@@ -137,6 +150,14 @@ void Equipo::agregarDiaReporte() {
     delete[] reporte;
     reporte = nuevoReporte;
     diasReporte++;
+}
+
+void Equipo::nuevoDia() {
+    stringstream s;
+    degradar();
+    agregarDiaReporte();
+    s<<"Estado del equipo al inicio del dia: "<<setprecision(4)<<estado<<"%"<<endl;
+        reporte[diasReporte-1] += s.str();
 }
 
 
@@ -171,11 +192,10 @@ string Equipo::generarReporte() {
     for (int i=0; i<diasReporte; i++) {
         s<<"------------------------Dia "<<i<<"------------------------"<<endl;
         if (reporte[i].empty()) {
-            s<<"No ha ocurrido ninguna incidencia en este día."<<endl;
+            s<<"No ha ocurrido ninguna incidencia en este dia."<<endl;
         } else {
             s<<reporte[i]<<endl;
         }
-        s<<endl<<endl;
     }
 
     return s.str();
@@ -183,6 +203,6 @@ string Equipo::generarReporte() {
 
 string Equipo::infoBasica() {
     stringstream s;
-    s<<"ID: "<<id<<" Nombre: "<<nombre<<" Incidencias activas: "<<incidenciasActivas<<" Prioridad: "<<prioridad()<<" En uso: "<<(enUso ? "Si" : "No")<<endl;
+    s<<"ID: "<<id<<" Nombre: "<<nombre<<" Incidencias activas: "<<incidenciasActivas<<" Prioridad: "<<prioridad()<<"Estado: "<<estado<<" En uso: "<<(enUso ? "Si" : "No")<<endl;
     return s.str();
 }

@@ -28,7 +28,7 @@ ContenedorEquipos* Leer::cargarEquipos(const string &nombreArchivo) {
     Equipo* equipo = nullptr;
     while (getline(archivo, linea)) {
         if (linea.empty()) {
-            continue; // Saltar líneas vacías
+            continue; // Saltar lineas vacias
         }
         buffer.clear();
         buffer.str(linea);

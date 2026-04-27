@@ -8,17 +8,24 @@ Laptops::Laptops(): Equipo() {
 }
 
 Laptops::Laptops(int id, string const &nombre, int criticidad, bool enUso, int incidenciasActivas, int tiempoInactivo): Equipo(id, nombre, incidenciasActivas, tiempoInactivo, criticidad, enUso) {
-    //Si la criticidad no está entre 6 y 9, ajustarla (si es menor a 6 ponerla en 6, si es mayor a 9 ponerla en 9
+    //Si la criticidad no esta entre 6 y 9, ajustarla (si es menor a 6 ponerla en 6, si es mayor a 9 ponerla en 9
     if (criticidad <6) {
         this->criticidad = 6;
     } else if (criticidad > 9) {
         this->criticidad = 9;
     }
-    //Si la laptop no está en uso, ajustar el tiempo inactivo a 0 y bajar 5 puntos de criticidad (en este caso si se puede tener una criticidad menor a 6, ya que la laptop no está en uso)
+    //Si la laptop no esta en uso, ajustar el tiempo inactivo a 0 y bajar 5 puntos de criticidad (en este caso si se puede tener una criticidad menor a 6, ya que la laptop no esta en uso)
     if (!enUso) {
         this->tiempoInactivo = 0;
         this->criticidad = this->criticidad-5;
     }
+}
+
+void Laptops::degradar() {
+    estado -= 0.3 + (0.2 * getIncidenciasActivas()) + (0.2 * getTiempoInactivo());
+     if (estado < 0) {
+         estado = 0;
+     }
 }
 
 string Laptops::toString() {

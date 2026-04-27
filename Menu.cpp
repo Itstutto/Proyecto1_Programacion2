@@ -10,7 +10,8 @@
 #include"GuardarEnConsola.h"
 #include "IReporte.h"
 #include "ReporteEquipos.h"
-
+#include "FabricaConvertidores.h"
+#include "Convertidores.h"
 void Menu::menuPrincipal(Simulador* simulador) {
     int op1 =0;
     Archivos gestorArchivos;
@@ -53,23 +54,52 @@ void Menu::menuPrincipal(Simulador* simulador) {
                       string tipo, nombre;
                       int id, incidenciasActivas, tiempoInactivo, criticidad;
                       bool enUso;
+                      try {
+                          cout << "Ingrese el tipo de equipo (Servidor, Laptop, ComputadoraEscritorio, AireAcondicionado, Grabadora, Camara): ";
+                          getline(cin, tipo);
+                          cout << "Ingrese el ID del equipo: ";
+                          cin >> id;
+                          if (cin.fail()) {
+                              throw ErrorArgumentoInvalido("ID debe ser un numero entero");
+                          }
 
-                      cout << "Ingrese el tipo de equipo (Servidor, Laptop, ComputadoraEscritorio, AireAcondicionado, Grabadora, Camara): ";
-                      getline(cin, tipo);
-                      cout << "Ingrese el ID del equipo: ";
-                      cin >> id;
-                      cout << "Ingrese el nombre del equipo: ";
-                      cin.ignore();
-                      getline(cin, nombre);
-                      cout << "Ingrese las incidencias del equipo: ";
-                      cin >> incidenciasActivas;
-                      cout << "Ingrese el tiempo inactivo del equipo: ";
-                      cin >> tiempoInactivo;
-                      cout << "Ingrese la criticidad del equipo: ";
-                      cin >> criticidad;
-                      cout<<"Ingrese si el equipo esta en uso (1 para si, 0 para no): ";
-                      cin >> enUso;
 
+
+                          cout << "Ingrese el nombre del equipo: ";
+                          cin.ignore();
+                          getline(cin, nombre);
+
+                          cout << "Ingrese las incidencias del equipo: ";
+                          cin >> incidenciasActivas;
+                          if (cin.fail()) {
+                                throw ErrorArgumentoInvalido("Incidencias activas debe ser un numero entero");
+                          }
+
+                          cout << "Ingrese el tiempo inactivo del equipo: ";
+                          cin >> tiempoInactivo;
+                          if (cin.fail()) {
+                              throw ErrorArgumentoInvalido("Tiempo inactivo debe ser un numero entero");
+                          }
+
+                          cout << "Ingrese la criticidad del equipo: ";
+                          cin >> criticidad;
+                          if (cin.fail()) {
+                              throw ErrorArgumentoInvalido("Criticidad debe ser un numero entero");
+                          }
+
+                          cout<<"Ingrese si el equipo esta en uso (1 para si, 0 para no): ";
+                          cin >> enUso;
+                          if (cin.fail() || (enUso != 0 && enUso != 1)) {
+                              throw ErrorArgumentoInvalido("En uso debe ser 1 para si o 0 para no");
+                          }
+
+                      } catch (const exception& e) {
+                          cout << "Error en la entrada: " << e.what() << endl<<endl;
+                          cin.clear();
+                          cin.ignore(1000, '\n');
+                          i--; // Decrementar el contador para permitir reingresar el equipo
+                          continue; // Saltar a la siguiente iteracion
+                      }
                       Equipo* nuevoEquipo = nullptr;
 
                       stringstream ss;
@@ -80,7 +110,7 @@ void Menu::menuPrincipal(Simulador* simulador) {
                       } catch (const exception& e) {
                           cerr << "Error al crear el equipo: " << e.what() << endl;
                           i--; // Decrementar el contador para permitir reingresar el equipo
-                          continue; // Saltar a la siguiente iteración
+                          continue; // Saltar a la siguiente iteracion
                       }
 
                   }
@@ -89,7 +119,15 @@ void Menu::menuPrincipal(Simulador* simulador) {
 
               case 3: {
                   cout<<"-------- EJECUTANDO SIMULACION --------"<<endl;
-                  simulador->ejecutarSimulacion();
+
+
+                  try {
+                    simulador->ejecutarSimulacion();
+                  } catch (const ErrorNoEncontrado& e) {
+                      cout <<"No se puede iniciar la simulacion sin al menos un equipo: " << endl;
+                      break;
+                  }
+
                   menuFinal(simulador);
                   break;
               }
@@ -222,26 +260,60 @@ void Menu::reporteRangoDias(Simulador* simulador) {
 }
 
 void Menu::reporteEquipos(Simulador* simulador) {
-    IReporte* reporteBase = new ReporteEquipos();
-    IReporte* reporteDecorado;
-    cout<< simulador->getListaEquipos()<<endl;
-
-    int id = 0;
-    while (id != -1) {
-
-        cout<< "Ingrese el ID del equipo que desea agregar al reporte (o -1 para salir): ";
-        cin >> id;
-        try {
-            reporteDecorado = new DecoradorRE(simulador->getReporteEquipo(id), reporteBase);
-            reporteBase = reporteDecorado; // El nuevo reporte decorado se convierte en la base para el siguiente
-        } catch (const ErrorNoEncontrado& e) {
-            cout << "Error: " << e.what() << endl;
+    char op = ' ';
+    while (op != 'c') {
+        cout<<"a. Crear reporte de uno (o varios) equipos especificos"<<endl;
+        cout<<"b. Crear reporte de un tipo de equipo especifico"<<endl;
+        cout<<"c. Volver"<<endl;
+        cout<<"Seleccione: ";
+        cin >> op;
+        if (cin.fail()) {
+            cout << "Entrada invalida" << endl;
+            cin.clear();
+            cin.ignore(1000, '\n');
+            return;
         }
+
+    switch (op) {
+    case 'a' :{
+            IReporte* reporteBase = new ReporteEquipos();
+        IReporte* reporteDecorado;
+        cout<< simulador->getListaEquipos()<<endl;
+        cout<<"----------------------Se genererara un reporte con todos los equipos que seleccione----------------------------"<<endl;
+        int id = 0;
+        while (id != -1) {
+
+            cout<< "Ingrese el ID del equipo que desea agregar al reporte (o -1 para salir): ";
+            cin >> id;
+            try {
+                reporteDecorado = new DecoradorRE(simulador->getReporteEquipo(id), reporteBase);
+                reporteBase = reporteDecorado; // El nuevo reporte decorado se convierte en la base para el siguiente
+            } catch (const ErrorNoEncontrado& e) {
+                cout << "Error: " << e.what() << endl;
+            }
+        }
+            generarSalida(reporteBase->generarReporte());
+            delete reporteBase; // Esto eliminara todos los decoradores encadenados
+            break;
     }
+    case 'b': {
 
-        generarSalida(reporteBase->generarReporte());
-        delete reporteBase; // Esto eliminará todos los decoradores encadenados
+            string tipo;
+            cout << "Ingrese el tipo de equipo que desea agregar al reporte (Servidor, Laptop, ComputadoraEscritorio, AireAcondicionado, Grabadora, Camara): ";
+            cin >> tipo;
+            try {
+                string reporte = simulador->getReporteTipoEquipo(tipo);
+                generarSalida(reporte);
+            } catch (const ErrorNoEncontrado& e) {
+                cout << "Error: " << e.what() << endl;
+            }
+             break;
 
+    }
+    default:
+        break;
+    }
+    }
 
 }
 

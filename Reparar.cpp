@@ -12,13 +12,14 @@ bool Reparar::repararEquipo(Equipo *equipo, PersonaMantenimiento *persona) {
     }
 
     if (equipo->getIncidenciasActivas() == 0 ) {
-        s<<"El trabajador "<<persona->getNombre()<<" al revisar "<<equipo->getNombre()<<" no encontró ninguna incidencia activa, por lo que procedio a revisar el siguiente equipo."<<endl;
+        s<<"El trabajador "<<persona->getNombre()<<" al revisar "<<equipo->getNombre()<<" no encontro ninguna incidencia activa, por lo que procedio a revisar el siguiente equipo."<<endl;
         reporte = s.str();
         return false;
     }
     else {
-        equipo->reparar();
-        s<<"El trabajador "<<persona->getNombre()<<" reparó las incidencias del equipo "<<equipo->getNombre()<<endl;
+        persona->reporteReparacion(equipo);
+        equipo->reparar(persona);
+        s<<"El trabajador "<<persona->getNombre()<<" reparo las incidencias del equipo "<<equipo->getNombre()<<endl;
         reporte = s.str();
         return true;
     }

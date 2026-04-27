@@ -78,4 +78,22 @@ add_executable(Proyecto1 main.cpp
         Menu.cpp
         Menu.h
         Leer.cpp
-        Leer.h)
+        Leer.h
+        Convertidor.cpp
+        Convertidor.h
+        ConvertidorServidores.cpp
+        ConvertidorServidores.h
+        ConvertidorLaptops.cpp
+        ConvertidorLaptops.h
+        ConvertidorComputadorasEscritorio.cpp
+        ConvertidorComputadorasEscritorio.h
+        ConvertidorAireAcondicionado.cpp
+        ConvertidorAireAcondicionado.h
+        ConvertidorGrabadoras.cpp
+        ConvertidorGrabadoras.h
+        ConvertidorCamaras.cpp
+        ConvertidorCamaras.h
+        Convertidores.cpp
+        Convertidores.h
+        FabricaConvertidores.cpp
+        FabricaConvertidores.h)
