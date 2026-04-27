@@ -38,6 +38,10 @@ Simulador::~Simulador() {
 
 }
 
+bool Simulador::getSimulacionEjecutada() {
+    return simulacionEjecutada;
+}
+
 string Simulador::getListaEquipos() {
     return contenedor->mostrarEquiposLista();
 }

@@ -5,6 +5,7 @@
 
 class MenuSimulacion {
 public:
+    void ajustarSensibilidad(Simulador* simulador) const;
     void cargarEquiposDesdeArchivo(Simulador* simulador) const;
     void ingresarEquiposManualmente(Simulador* simulador) const;
     void cambiarNombreTecnico(Simulador* simulador) const;

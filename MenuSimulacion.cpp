@@ -8,6 +8,28 @@
 
 using namespace std;
 
+void MenuSimulacion::ajustarSensibilidad(Simulador *simulador) const {
+    if (simulador->getSimulacionEjecutada()) {
+        cout << "No se puede ajustar la sensibilidad despues de ejecutar la simulacion" << endl;
+        return;
+    }
+    double nuevaSensibilidad;
+    cout<< "Ingrese la nueva sensibilidad para la asignacion de incidencias (0 a 100): ";
+    cin >> nuevaSensibilidad;
+    if (cin.fail() || nuevaSensibilidad < 0 || nuevaSensibilidad > 100) {
+        cout << "Entrada invalida. La sensibilidad debe ser un numero entre 0 y 100." << endl;
+        cin.clear();
+        cin.ignore(1000, '\n');
+        return;
+    }
+    try {
+        simulador->setSensibilidadIncidencias(nuevaSensibilidad / 100.0); // Convertir a un valor entre 0 y 1
+        cout << "Sensibilidad ajustada exitosamente a " << nuevaSensibilidad << "%" << endl;
+    }catch (ErrorArgumentoInvalido& e) {
+        cout << "Error: " << e.what() << endl;
+    }
+}
+
 void MenuSimulacion::cargarEquiposDesdeArchivo(Simulador* simulador) const {
     Archivos gestorArchivos;
     ContenedorEquipos* contenedor = nullptr;

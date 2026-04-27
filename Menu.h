@@ -22,7 +22,6 @@ public:
     Menu();
     void menuPrincipal(Simulador* simulador);
     void menuFinal(Simulador* simulador);
-
 };
 
 

@@ -8,8 +8,9 @@ void Menu::menuPrincipal(Simulador* simulador) {
         cout << "--- SIMULACION ---" << endl;
         cout << "1. Cargar equipos desde archivos" << endl;
         cout << "2. Ingresar equipos manualmente" << endl;
-        cout << "3. Ejecutar Simulacion" << endl;
-        cout << "4. Cambiar nombre de tecnico" << endl;
+        cout<<  "3. Ajustar sensibilidad de asignacion de incidencias"<<endl;
+        cout << "4. Ejecutar Simulacion" << endl;
+        cout << "5. Cambiar nombre de tecnico" << endl;
         cout << "Seleccione: ";
         cin >> op1;
         try {
@@ -22,6 +23,9 @@ void Menu::menuPrincipal(Simulador* simulador) {
                     menuSimulacion.ingresarEquiposManualmente(simulador);
                     break;
                 case 3:
+                    menuSimulacion.ajustarSensibilidad(simulador);
+                    break;
+                case 4:
                     cout << "-------- EJECUTANDO SIMULACION --------" << endl;
                     try {
                         simulador->ejecutarSimulacion();
@@ -33,7 +37,7 @@ void Menu::menuPrincipal(Simulador* simulador) {
                     menuFinal(simulador);
                     op1 = -1;
                     break;
-                case 4:
+                case 5:
                     menuSimulacion.cambiarNombreTecnico(simulador);
                     break;
                 default:
@@ -74,3 +78,11 @@ void Menu::menuFinal(Simulador* simulador) {
         }
     } while (op != 2);
 }
+
+
+/*
+ *Comentario:
+ *Se hace la division de responsabilidades entre los diferentes menus tomando en cuenta
+ *las divisiones convenientes.
+ *Se podrian dividir mas pero esto podria incluso violar el principio de KISS
+ */

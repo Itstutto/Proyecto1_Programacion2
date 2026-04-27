@@ -28,6 +28,18 @@ Incidencias::Incidencias(int incidenciasRestantes, int plazo, double sensibilida
     //a tener incidencias
 }
 
+void Incidencias::setSensibilidad(double nuevaSensibilidad) {
+    if (nuevaSensibilidad < 0 || (nuevaSensibilidad > 1 && nuevaSensibilidad != 2)) {
+        throw ErrorArgumentoInvalido("La sensibilidad debe ser un valor entre 0 y 1");
+    }
+    if (nuevaSensibilidad == 2) {
+        this-> sensibilidad = 0;
+        //si se pone 2, se crean todas las incidencias el primer dia
+    } else {
+        this-> sensibilidad = 95-45*nuevaSensibilidad;
+    }
+}
+
 int Incidencias::calculoIncidencias() {
 
     int posibilidad = (diasCompletados*100/plazo);

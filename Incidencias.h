@@ -32,6 +32,7 @@ public:
     Incidencias(int incidenciasRestantes = 100, int plazo = 30, double sensibilidad = 0.7);
 
 
+    void setSensibilidad(double nuevaSensibilidad);
 
     int calculoIncidencias();
     void asignarIncidencias(ContenedorEquipos* contenedor);

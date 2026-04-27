@@ -39,11 +39,15 @@ public:
     // 31 dias porque existe el dia 0
     ~Simulador();
 
+    bool getSimulacionEjecutada();
+
     string getListaEquipos();
     string getEquiposSerializados();
     void agregarEquipos(ContenedorEquipos* nuevoContenedor);
 
     string getListaPersonas();
+
+    void setSensibilidadIncidencias(double nuevaSensibilidad);
 
     void agregarEquipo(Equipo* equipo);
     void agregarPersona(PersonaMantenimiento* persona);
@@ -63,4 +67,10 @@ public:
 };
 
 
+inline void Simulador::setSensibilidadIncidencias(double nuevaSensibilidad) {
+    if (nuevaSensibilidad < 0 || nuevaSensibilidad > 1) {
+        throw ErrorArgumentoInvalido("La sensibilidad debe ser un numero entre 0 y 1");
+    }
+    incidencias->setSensibilidad(nuevaSensibilidad);
+}
 #endif //PROYECTO1_SIMULADOR_H
