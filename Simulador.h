@@ -43,6 +43,8 @@ public:
     string getEquiposSerializados();
     void agregarEquipos(ContenedorEquipos* nuevoContenedor);
 
+    string getListaPersonas();
+
     void agregarEquipo(Equipo* equipo);
     void agregarPersona(PersonaMantenimiento* persona);
 

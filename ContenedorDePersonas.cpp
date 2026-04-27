@@ -46,3 +46,13 @@ void ContenedorDePersonas::nuevoDiaPersonas() {
         }
     }
 }
+
+string ContenedorDePersonas::mostarListaPersonas() {
+    stringstream s;
+    for (int i=0; i<tam; i++) {
+        if (personas[i] != nullptr) {
+            s<<i+1<<". ID: "<<i<<" - Nombre: "<<personas[i]->getNombre()<<endl;
+        }
+    }
+    return s.str();
+}

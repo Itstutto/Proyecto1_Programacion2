@@ -4,6 +4,7 @@
 
 #include "Reparar.h"
 
+
 bool Reparar::repararEquipo(Equipo *equipo, PersonaMantenimiento *persona) {
     stringstream s;
 

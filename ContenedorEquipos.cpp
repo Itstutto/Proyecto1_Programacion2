@@ -106,7 +106,7 @@ Equipo * ContenedorEquipos::buscarEquipo(int id) {
 
 Equipo * ContenedorEquipos::buscarEquipoIndice(int indice) {
     if (indice < 0 || indice >= cant) {
-        throw ErrorNoEncontrado("Indice fuera de rango");
+        return nullptr;
     }
     if (!equipos[indice]) {
         throw ErrorPunteroNulo("No se encontro un equipo en el indice proporcionado");
@@ -187,7 +187,7 @@ void ContenedorEquipos::agregarEquipos(ContenedorEquipos *nuevoContenedor) {
         try {
             agregarEquipo(nuevoContenedor->buscarEquipoIndice(i));
         }catch (const ErrorRepetido& e) {
-            cout<<"Esta repetido uno";//si esta repetido solo no se agrega
+            cout<<"El equipo "<<buscarEquipoIndice(i)->getNombre()<<" posee un ID ya utilizado, no se agrega"<<endl;//si esta repetido solo no se agrega
         }catch (const ErrorEspacio& e) {
             throw ErrorEspacio("No se pueden agregar mas equipos, el contenedor esta lleno, se han agredado "+to_string(i)+" equipos");
         }

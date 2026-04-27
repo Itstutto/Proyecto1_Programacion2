@@ -17,6 +17,7 @@ public:
     void agregarPersona(PersonaMantenimiento* persona);
     PersonaMantenimiento* getPersona(const int indice);
     void nuevoDiaPersonas();
+    string mostarListaPersonas();
 
 };
 

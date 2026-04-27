@@ -92,6 +92,7 @@ void Menu::menuPrincipal(Simulador* simulador) {
                           if (cin.fail() || (enUso != 0 && enUso != 1)) {
                               throw ErrorArgumentoInvalido("En uso debe ser 1 para si o 0 para no");
                           }
+                          cin.ignore(); // Limpiar el buffer para la siguiente iteracion
 
                       } catch (const exception& e) {
                           cout << "Error en la entrada: " << e.what() << endl<<endl;
@@ -125,29 +126,36 @@ void Menu::menuPrincipal(Simulador* simulador) {
                     simulador->ejecutarSimulacion();
                   } catch (const ErrorNoEncontrado& e) {
                       cout <<"No se puede iniciar la simulacion sin al menos un equipo: " << endl;
+                      cout<<e.what()<<endl;
                       break;
                   }
 
                   menuFinal(simulador);
+                  op1 = -1; // Salir del menu principal despues de ejecutar la simulacion
                   break;
               }
 
               case 4: {
                   int id;
                   string nuevoNombre;
+                  cout<<simulador->getListaPersonas()<<endl;
                   cout << "Ingrese el ID del tecnico que desea renombrar: ";
                   cin >> id;
                   cout << "Ingrese el nuevo nombre del tecnico: ";
                   cin.ignore();
                   getline(cin, nuevoNombre);
-                  simulador->cambiarNombreTecnico(id, nuevoNombre);
+                  try {
+                      simulador->cambiarNombreTecnico(id, nuevoNombre);
+                  }catch (const ErrorArgumentoInvalido& e) {
+                      cout << "Error: " << e.what() << endl;
+                  }
                   break;
               }
               default:
                   throw "Opcion no valida";
           }
       } catch (const char* msg) {
-          cout << "Error: " << msg << endl;
+          cout <<endl<< "Error: " << msg << endl;
           cin.clear();
           cin.ignore(1000, '\n');
 
@@ -276,7 +284,7 @@ void Menu::reporteEquipos(Simulador* simulador) {
 
     switch (op) {
     case 'a' :{
-            IReporte* reporteBase = new ReporteEquipos();
+        IReporte* reporteBase = new ReporteEquipos();
         IReporte* reporteDecorado;
         cout<< simulador->getListaEquipos()<<endl;
         cout<<"----------------------Se genererara un reporte con todos los equipos que seleccione----------------------------"<<endl;

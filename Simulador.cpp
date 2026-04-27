@@ -54,6 +54,10 @@ void Simulador::agregarEquipos(ContenedorEquipos *nuevoContenedor) {
     contenedor->agregarEquipos(nuevoContenedor);
 }
 
+string Simulador::getListaPersonas() {
+    return contenedorPersonas->mostarListaPersonas();
+}
+
 void Simulador::agregarEquipo(Equipo *equipo) {
     contenedor->agregarEquipo(equipo);
 }
@@ -69,6 +73,9 @@ void Simulador::cambiarNombreTecnico(int indice, string nuevoNombre) {
 }
 
 void Simulador::ejecutarSimulacion() {
+    if (contenedor->getCant() == 0) {
+        throw ErrorNoEncontrado("No se puede ejecutar la simulacion sin al menos un equipo");
+    }
     stringstream s; //para generar los reportes diarios
     for (int i=0; i<diasSimulacion; i++) {
 
@@ -109,6 +116,10 @@ void Simulador::ejecutarSimulacion() {
                     s<<"No hay mas equipos para revisar hoy"<<endl;
                 }
             }
+            //se escogen los 3 equipos mas prioritarios, se intenta reparar cada uno, si se repara se pasa al
+            //siguiente tecnico, si no se repara el mismo tecnico revisa el siguiente equipo mas prioritario,
+            //y asi sucesivamente hasta que se hayan intentado reparar 3 equipos o no haya mas equipos para
+            //revisar
         }
 
         contenedor->aumentarInactividad();
