@@ -11,7 +11,7 @@ void Menu::menuPrincipal(Simulador* simulador) {
         cout<<  "3. Ajustar sensibilidad de asignacion de incidencias"<<endl;
         cout << "4. Ejecutar Simulacion" << endl;
         cout << "5. Cambiar nombre de tecnico" << endl;
-        cout << "Seleccione: ";
+        cout << "Seleccione: "<<endl;
         cin >> op1;
         try {
             if (cin.fail()) throw "Entrada invalida";
@@ -56,7 +56,7 @@ void Menu::menuFinal(Simulador* simulador) {
         cout << "--- MENU ---" << endl;
         cout << "1. Generar Reporte" << endl;
         cout << "2. Salir" << endl;
-        cout << "Seleccione: ";
+        cout << "Seleccione: "<<endl;
         cin >> op;
         cout << endl << endl;
         try {

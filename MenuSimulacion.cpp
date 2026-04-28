@@ -35,7 +35,7 @@ void MenuSimulacion::cargarEquiposDesdeArchivo(Simulador* simulador) const {
     ContenedorEquipos* contenedor = nullptr;
     string nombreArchivo;
 
-    cout << "En que archivo se encuentran los equipos?" << endl;
+    cout << "En que archivo se encuentran los equipos? (incluya en el nombre .txt): " << endl;
     cin >> nombreArchivo;
 
     try {
@@ -51,7 +51,7 @@ void MenuSimulacion::ingresarEquiposManualmente(Simulador* simulador) const {
     Archivos gestorArchivos;
     int cantidadEquipos;
 
-    cout << "Cuantos equipos desea ingresar? ";
+    cout << "Cuantos equipos desea ingresar?: "<<endl;
     cin >> cantidadEquipos;
     cin.ignore();
 
@@ -61,37 +61,37 @@ void MenuSimulacion::ingresarEquiposManualmente(Simulador* simulador) const {
         bool enUso;
 
         try {
-            cout << "Ingrese el tipo de equipo (Servidor, Laptop, ComputadoraEscritorio, AireAcondicionado, Grabadora, Camara): ";
+            cout << "Ingrese el tipo de equipo (Servidor, Laptop, ComputadoraEscritorio, AireAcondicionado, Grabadora, Camara): "<<endl;
             getline(cin, tipo);
-            cout << "Ingrese el ID del equipo: ";
+            cout << "Ingrese el ID del equipo: "<<endl;
             cin >> id;
             if (cin.fail()) {
                 throw ErrorArgumentoInvalido("ID debe ser un numero entero");
             }
 
-            cout << "Ingrese el nombre del equipo: ";
+            cout << "Ingrese el nombre del equipo: "<<endl;
             cin.ignore();
             getline(cin, nombre);
 
-            cout << "Ingrese las incidencias del equipo: ";
+            cout << "Ingrese las incidencias del equipo: "<<endl;
             cin >> incidenciasActivas;
             if (cin.fail()) {
                 throw ErrorArgumentoInvalido("Incidencias activas debe ser un numero entero");
             }
 
-            cout << "Ingrese el tiempo inactivo del equipo: ";
+            cout << "Ingrese el tiempo inactivo del equipo: "<<endl;
             cin >> tiempoInactivo;
             if (cin.fail()) {
                 throw ErrorArgumentoInvalido("Tiempo inactivo debe ser un numero entero");
             }
 
-            cout << "Ingrese la criticidad del equipo: ";
+            cout << "Ingrese la criticidad del equipo: "<<endl;
             cin >> criticidad;
             if (cin.fail()) {
                 throw ErrorArgumentoInvalido("Criticidad debe ser un numero entero");
             }
 
-            cout << "Ingrese si el equipo esta en uso (1 para si, 0 para no): ";
+            cout << "Ingrese si el equipo esta en uso (1 para si, 0 para no): "<<endl;
             cin >> enUso;
             if (cin.fail() || (enUso != 0 && enUso != 1)) {
                 throw ErrorArgumentoInvalido("En uso debe ser 1 para si o 0 para no");
@@ -123,9 +123,9 @@ void MenuSimulacion::cambiarNombreTecnico(Simulador* simulador) const {
     string nuevoNombre;
 
     cout << simulador->getListaPersonas() << endl;
-    cout << "Ingrese el ID del tecnico que desea renombrar: ";
+    cout << "Ingrese el ID del tecnico que desea renombrar: "<<endl;
     cin >> id;
-    cout << "Ingrese el nuevo nombre del tecnico: ";
+    cout << "Ingrese el nuevo nombre del tecnico: "<<endl;
     cin.ignore();
     getline(cin, nuevoNombre);
 

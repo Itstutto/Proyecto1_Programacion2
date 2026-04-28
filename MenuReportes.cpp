@@ -22,7 +22,7 @@ void MenuReportes::menuReportes(Simulador* simulador) const {
         cout << "b. Reporte rango de dias" << endl;
         cout << "c. Reporte de equipo" << endl;
         cout << "d. Volver" << endl;
-        cout << "Seleccione: ";
+        cout << "Seleccione: "<<endl;
         cin >> op;
 
         try {
@@ -52,21 +52,21 @@ void MenuReportes::reporteRangoDias(Simulador* simulador) const {
 
     cin.ignore();
 
-    cout << "Ingrese el dia inicial : ";
+    cout << "Ingrese el dia inicial : "<<endl;
     cin >> inicio;
 
-    cout << "Ingrese el dia final : ";
+    cout << "Ingrese el dia final : "<<endl;
     cin >> final;
 
-    cout << "Incluir incidencias? (s/n): ";
+    cout << "Incluir incidencias? (s/n): "<<endl;
     cin >> inc;
     incluirIncidencias = (inc == 's' || inc == 'S');
 
-    cout << "Incluir reparaciones? (s/n): ";
+    cout << "Incluir reparaciones? (s/n): "<<endl;
     cin >> rep;
     incluirReparaciones = (rep == 's' || rep == 'S');
 
-    cout << "Incluir estado diario? (s/n): ";
+    cout << "Incluir estado diario? (s/n): "<<endl;
     cin >> estado;
     incluirEstado = (estado == 's' || estado == 'S');
 
@@ -84,7 +84,7 @@ void MenuReportes::reporteEquipos(Simulador* simulador) const {
         cout << "a. Crear reporte de uno (o varios) equipos especificos" << endl;
         cout << "b. Crear reporte de un tipo de equipo especifico" << endl;
         cout << "c. Volver" << endl;
-        cout << "Seleccione: ";
+        cout << "Seleccione: "<<endl;
         cin >> op;
         if (cin.fail()) {
             cout << "Entrada invalida" << endl;
@@ -101,7 +101,7 @@ void MenuReportes::reporteEquipos(Simulador* simulador) const {
                 cout << "----------------------Se genererara un reporte con todos los equipos que seleccione----------------------------" << endl;
                 int id = 0;
                 while (id != -1) {
-                    cout << "Ingrese el ID del equipo que desea agregar al reporte (o -1 para salir): ";
+                    cout << "Ingrese el ID del equipo que desea agregar al reporte (o -1 para salir): "<<endl;
                     cin >> id;
                     try {
                         reporteDecorado = new DecoradorRE(simulador->getReporteEquipo(id), reporteBase);
@@ -116,7 +116,7 @@ void MenuReportes::reporteEquipos(Simulador* simulador) const {
             }
             case 'b': {
                 string tipo;
-                cout << "Ingrese el tipo de equipo que desea agregar al reporte (Servidor, Laptop, ComputadoraEscritorio, AireAcondicionado, Grabadora, Camara): ";
+                cout << "Ingrese el tipo de equipo que desea agregar al reporte (Servidor, Laptop, ComputadoraEscritorio, AireAcondicionado, Grabadora, Camara): "<<endl;
                 cin >> tipo;
                 try {
                     string reporte = simulador->getReporteTipoEquipo(tipo);

@@ -16,7 +16,7 @@ void SalidaReporte::generarSalida(const string& contenido) const {
     cout << "Elija el formato de salida: " << endl;
     cout << "a. Consola" << endl;
     cout << "b. Archivo de texto" << endl;
-    cout << "Seleccione: ";
+    cout << "Seleccione: "<<endl;
     cin >> op;
 
     switch (op) {
@@ -25,7 +25,7 @@ void SalidaReporte::generarSalida(const string& contenido) const {
             break;
         case 'b': {
             string nombreArchivo;
-            cout << "Ingrese el nombre del archivo: ";
+            cout << "Ingrese el nombre del archivo: "<<endl;
             cin >> nombreArchivo;
             guardador = new GuardarEnArchivoTexto(nombreArchivo);
             break;
