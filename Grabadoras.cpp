@@ -22,7 +22,7 @@ Grabadoras::Grabadoras(int id, string const &nombre, int criticidad, bool enUso,
 }
 
 void Grabadoras::degradar() {
-    estado -= 0.2 + (0.1 * getIncidenciasActivas()) + (0.1 * getTiempoInactivo());
+    estado -= 0.2 + (0.1 * getIncidenciasActivas()) + (0.1 * getTiempoInactivo() / 24);
      if (estado < 0) {
          estado = 0;
      }
@@ -36,6 +36,7 @@ string Grabadoras::toString() {
     ss << "Tiempo Inactivo: " << getTiempoInactivo() << " horas" << endl;
     ss << "Criticidad: " << getCriticidad() << endl;
     ss << "Prioridad: " << prioridad() << endl;
+    ss << "Estado: " << estado << "% " << endl;
     return ss.str();
 }
 

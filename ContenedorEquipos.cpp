@@ -47,6 +47,14 @@ int ContenedorEquipos::getCant() {
     return cant;
 }
 
+int ContenedorEquipos::getTotalIncidencias() {
+    int total = 0;
+    for (int i = 0; i < cant; i++) {
+        total += equipos[i]->getIncidenciasActivas();
+    }
+    return total;
+}
+
 void ContenedorEquipos::agregarEquipo(Equipo *equipo) {
         if (cant >= tam) {
             throw ErrorEspacio("El contenedor de equipos esta lleno");

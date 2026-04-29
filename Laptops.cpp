@@ -22,7 +22,8 @@ Laptops::Laptops(int id, string const &nombre, int criticidad, bool enUso, int i
 }
 
 void Laptops::degradar() {
-    estado -= 0.3 + (0.2 * getIncidenciasActivas()) + (0.2 * getTiempoInactivo());
+    estado -= 0.3 + (0.2 * getIncidenciasActivas()) + (0.2 * getTiempoInactivo()/24);
+    // la laptop se degrada un 0.3% cada dia, mas un 0.2% por cada incidencia activa, mas un 0.2% por cada dia que esta inactiva (se divide entre 24 para que sea un porcentaje por hora)
      if (estado < 0) {
          estado = 0;
      }
@@ -36,6 +37,7 @@ string Laptops::toString() {
     ss << "Tiempo Inactivo: " << getTiempoInactivo() << " horas" << endl;
     ss << "Criticidad: " << getCriticidad() << endl;
     ss << "Prioridad: " << prioridad() << endl;
+    ss << "Estado: " << estado << "% " << endl;
     return ss.str();
 }
 

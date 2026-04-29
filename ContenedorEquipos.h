@@ -23,6 +23,7 @@ public:
     void liberarContenedor();
 
     int getCant();
+    int getTotalIncidencias();
 
     void agregarEquipo(Equipo* equipo);
     void eliminarEquipo(int id);
@@ -37,10 +38,13 @@ public:
 
     void agregarEquipos(ContenedorEquipos* nuevoContenedor);
 
+
     void nuevoDiaEquipos();
 
     void ordenarPorPrioridad();
     void aumentarInactividad();
+
+
 
     void ordernarPorId();
 

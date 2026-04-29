@@ -103,7 +103,8 @@ void Equipo::setNombre(string const &nombre) {
 void Equipo::agregarIncidencia() {
     stringstream s;
     incidenciasActivas++;
-    if (incidenciasActivas > 3) {
+
+    if (!danado) {
         danado = true;
     }
 
@@ -121,7 +122,7 @@ void Equipo::reparar(PersonaMantenimiento* persona) {
     incidenciasActivas = 0; //al reparar se reparan todas sus incidencias
     if (danado) danado = false;
 
-    estado += 30; //al reparar se recupera un 30% del estado del equipo
+    estado += 40; //al reparar se recupera un 40% del estado del equipo
     if (estado > 100) {
         estado = 100;
     }
@@ -157,7 +158,9 @@ void Equipo::nuevoDia() {
     degradar();
     agregarDiaReporte();
     s<<"Estado del equipo al inicio del dia: "<<setprecision(4)<<estado<<"%"<<endl;
-        reporte[diasReporte-1] += s.str();
+    s<<"Prioridad del equipo al inicio del dia: "<<setprecision(4)<<prioridad()<<endl;
+    s<<"Tiempo inactivo del equipo al inicio del dia: "<<tiempoInactivo<<" horas"<<endl;
+    reporte[diasReporte-1] += s.str();
 }
 
 

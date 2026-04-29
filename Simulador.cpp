@@ -108,6 +108,10 @@ void Simulador::ejecutarSimulacion() {
 
 
         for (int j=0, k = 0; k<3 && j<contenedor->getCant(); j++) {
+            if (contenedor->getTotalIncidencias() == 0) {
+                s<<"No hay mas incidencias para reparar hoy"<<endl;
+                break;
+            }
             if (reparacion->repararEquipo(contenedor->buscarEquipoIndice(j),contenedorPersonas->getPersona(k))) {
                 k++;
                 s<<reparacion->generarReporte()<<endl;

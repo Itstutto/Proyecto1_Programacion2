@@ -22,7 +22,8 @@ Camaras::Camaras(int id, string const &nombre, int criticidad, bool enUso, int i
 }
 
 void Camaras::degradar() {
-    estado -= 0.1 + (0.1 * getIncidenciasActivas()) + (0.1 * getTiempoInactivo());
+    estado -= 0.1 + (0.1 * getIncidenciasActivas()) + (0.1 * getTiempoInactivo() / 24 );
+    //la camara se degrada un 0.1% cada dia, mas un 0.1% por cada incidencia activa, mas un 0.1% por cada dia que esta inactiva (se divide entre 24 para que sea un porcentaje por hora)
      if (estado < 0) {
          estado = 0;
      }
@@ -36,6 +37,7 @@ string Camaras::toString() {
     ss << "Tiempo Inactivo: " << getTiempoInactivo() << " horas" << endl;
     ss << "Criticidad: " << getCriticidad() << endl;
     ss << "Prioridad: " << prioridad() << endl;
+    ss << "Estado: " << estado << "% " << endl;
     return ss.str();
 }
 
