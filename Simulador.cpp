@@ -8,8 +8,8 @@
 #include "ErrorRepetido.h"
 
 Simulador::Simulador(int diasSimulacion, int totalIncidencias, double sensibilidad) {
-    this->reporte = new string * [diasSimulacion+1];// +1 para incluir el estado final
-    for (int i=0; i<=diasSimulacion; i++) {
+    this->reporte = new string * [diasSimulacion+2];// +2 para incluir el dia 0 y el reporte final despues de la simulacion
+    for (int i=0; i<=diasSimulacion+1; i++) {
         reporte[i] = new string[3];
     }
     this->simulacionEjecutada = false;
@@ -52,6 +52,7 @@ string Simulador::getEquiposSerializados() {
 
 void Simulador::agregarEquipos(ContenedorEquipos *nuevoContenedor) {
     if (simulacionEjecutada) {
+        delete nuevoContenedor;
         throw ErrorArgumentoInvalido("No se pueden cambiar los equipos despues de ejecutar la simulacion");
     }
 
@@ -81,7 +82,7 @@ void Simulador::ejecutarSimulacion() {
         throw ErrorNoEncontrado("No se puede ejecutar la simulacion sin al menos un equipo");
     }
     stringstream s; //para generar los reportes diarios
-    for (int i=0; i<diasSimulacion; i++) {
+    for (int i=0; i<=diasSimulacion; i++) {
 
         contenedor->nuevoDiaEquipos();
         contenedorPersonas->nuevoDiaPersonas();
@@ -94,7 +95,8 @@ void Simulador::ejecutarSimulacion() {
 
         reporte[i][0] = s.str();
         if (i == 0) {
-            reporte[i][1] = "DIA INICIAL, NO SE REPARAN EQUIPOS";
+            reporte[i][1] = "DIA INICIAL, NO SE REPARAN EQUIPOS\n";
+            reporte[i][1] += "Cantidad de dispositivos con incidencias: "+to_string(contenedor->pendientesDeReparar());
             reporte[i][2] = contenedor->mostrarEquipos();
             continue;
         }
@@ -129,6 +131,8 @@ void Simulador::ejecutarSimulacion() {
             //y asi sucesivamente hasta que se hayan intentado reparar 3 equipos o no haya mas equipos para
             //revisar
         }
+        s<<"Dispositivos pendientes de reparar: "<<contenedor->pendientesDeReparar()<<endl;
+        s<<"Riesgo global al final del dia:"<< contenedor->riesgoGlobal()<<endl;
 
         contenedor->aumentarInactividad();
         reporte[i][1]= s.str();
@@ -137,7 +141,7 @@ void Simulador::ejecutarSimulacion() {
     }
     contenedor->ordernarPorId();
     s.clear();
-    reporte[diasSimulacion][2] = contenedor->mostrarEquipos();
+    reporte[diasSimulacion+1][2] = contenedor->reporteFinal(); //reporte final despues de la simulacion, se muestra el estado final de los equipos
     simulacionEjecutada = true;
 
 }
@@ -193,6 +197,12 @@ IReporteDelDia * Simulador::getReporteEquipo(int idEquipo) {
     return equipo;
 }
 
+void Simulador::setSensibilidadIncidencias(double nuevaSensibilidad) {
+    if (nuevaSensibilidad < 0 || (nuevaSensibilidad > 1 && nuevaSensibilidad != 2)) {
+        throw ErrorArgumentoInvalido("La sensibilidad debe ser un numero entre 0 y 1");
+    }
+    incidencias->setSensibilidad(nuevaSensibilidad);
+}
 
 string Simulador::generarReporte() {
     stringstream s;
@@ -210,6 +220,8 @@ string Simulador::generarReporte() {
             }
         }
     }
+    s<<"------------------------REPORTE FINAL------------------------"<<endl;
+     s<<reporte[diasSimulacion+1][2]<<endl;
     return s.str();
 }
 

@@ -103,12 +103,21 @@ void MenuReportes::reporteEquipos(Simulador* simulador) const {
                 while (id != -1) {
                     cout << "Ingrese el ID del equipo que desea agregar al reporte (o -1 para salir): "<<endl;
                     cin >> id;
-                    try {
-                        reporteDecorado = new DecoradorRE(simulador->getReporteEquipo(id), reporteBase);
-                        reporteBase = reporteDecorado;
-                    } catch (const ErrorNoEncontrado& e) {
-                        cout << "Error: " << e.what() << endl;
+                    if (cin.fail()) {
+                        cout << "Entrada invalida" << endl;
+                        cin.clear();
+                        cin.ignore(1000, '\n');
+                        continue;
                     }
+                    if (id != -1) {
+                        try {
+                            reporteDecorado = new DecoradorRE(simulador->getReporteEquipo(id), reporteBase);
+                            reporteBase = reporteDecorado;
+                        } catch (const ErrorNoEncontrado& e) {
+                            cout << "Error: " << e.what() << endl;
+                        }
+                    }
+
                 }
                 salidaReporte.generarSalida(reporteBase->generarReporte());
                 delete reporteBase;

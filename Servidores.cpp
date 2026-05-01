@@ -41,6 +41,7 @@ string Servidores::toString() {
     ss << "Criticidad: " << getCriticidad() << endl;
     ss << "Prioridad: " << prioridad() << endl;
     ss << "Estado: " << estado << "% " << endl;
+    ss << (enUso ? "El servidor esta en uso" : "El servidor no esta en uso") << endl;
     return ss.str();
 }
 

@@ -51,6 +51,10 @@ Equipo::Equipo(int id, string const &nombre, int incidenciasActivas, int tiempoI
     estado = 100;
 }
 
+Equipo::~Equipo() {
+    delete[] reporte;
+}
+
 float Equipo::prioridad() {
     //Pendiente falta, cantidad de
         return ((float)incidenciasActivas * 0.3) + ((float)tiempoInactivo * 0.2) + ((float)getCriticidad() * 0.5);
@@ -89,6 +93,10 @@ bool Equipo::getUso() {
 
 bool Equipo::getDanado() {
     return danado;
+}
+
+double Equipo::getEstado() {
+    return estado;
 }
 
 void Equipo::setNombre(string const &nombre) {
@@ -206,6 +214,6 @@ string Equipo::generarReporte() {
 
 string Equipo::infoBasica() {
     stringstream s;
-    s<<"ID: "<<id<<" Nombre: "<<nombre<<" Incidencias activas: "<<incidenciasActivas<<" Prioridad: "<<prioridad()<<"Estado: "<<estado<<" En uso: "<<(enUso ? "Si" : "No")<<endl;
+    s<<"ID: "<<id<<" Nombre: "<<nombre<<" Incidencias activas: "<<incidenciasActivas<<" Prioridad: "<<prioridad()<<" Estado: "<<estado<<" En uso: "<<(enUso ? "Si" : "No")<<endl;
     return s.str();
 }

@@ -21,7 +21,7 @@ private:
     int diasReporte;
 public:
     PersonaMantenimiento(string nombre, string id);
-    ~PersonaMantenimiento()= default;
+    ~PersonaMantenimiento() override;
 
     string getNombre();
     string getId();

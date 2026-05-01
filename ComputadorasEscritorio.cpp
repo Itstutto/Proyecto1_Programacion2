@@ -38,6 +38,7 @@ string ComputadorasEscritorio::toString() {
     ss << "Criticidad: " << getCriticidad() << endl;
     ss << "Prioridad: " << prioridad() << endl;
     ss << "Estado: " << estado << "% " << endl;
+    ss << (enUso ? "La computadora esta en uso" : "La computadora no esta en uso") << endl;
     return ss.str();
 }
 

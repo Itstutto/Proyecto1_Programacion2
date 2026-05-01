@@ -11,6 +11,11 @@ PersonaMantenimiento::PersonaMantenimiento(string nombre, string id) {
     reporte = new string[0];
 }
 
+PersonaMantenimiento::~PersonaMantenimiento() {
+    delete[] reporte;
+    reporte = nullptr;
+}
+
 string PersonaMantenimiento::getNombre() {
     return this->nombre;
 }

@@ -38,6 +38,7 @@ string Laptops::toString() {
     ss << "Criticidad: " << getCriticidad() << endl;
     ss << "Prioridad: " << prioridad() << endl;
     ss << "Estado: " << estado << "% " << endl;
+    ss << (enUso ? "La laptop esta en uso" : "La laptop no esta en uso") << endl;
     return ss.str();
 }
 

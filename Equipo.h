@@ -33,7 +33,7 @@ protected:
 public:
     Equipo();
     Equipo(int id,string const &nombre, int incidenciasActivas = 0, int tiempoInactivo = 0, int criticidad = 0, bool enUso = false);
-    virtual ~Equipo() = default;
+    ~Equipo() override;
 
     float prioridad();
 
@@ -44,6 +44,7 @@ public:
     int getCriticidad();
     bool getUso();
     bool getDanado();
+    double getEstado();
 
     void setId(int id);
     void setNombre(string const &nombre);

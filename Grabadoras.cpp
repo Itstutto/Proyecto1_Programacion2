@@ -37,6 +37,7 @@ string Grabadoras::toString() {
     ss << "Criticidad: " << getCriticidad() << endl;
     ss << "Prioridad: " << prioridad() << endl;
     ss << "Estado: " << estado << "% " << endl;
+    ss << (enUso ? "La grabadora esta en uso" : "La grabadora no esta en uso") << endl;
     return ss.str();
 }
 

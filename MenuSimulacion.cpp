@@ -16,7 +16,7 @@ void MenuSimulacion::ajustarSensibilidad(Simulador *simulador) const {
     double nuevaSensibilidad;
     cout<< "Ingrese la nueva sensibilidad para la asignacion de incidencias (0 a 100): ";
     cin >> nuevaSensibilidad;
-    if (cin.fail() || nuevaSensibilidad < 0 || nuevaSensibilidad > 100) {
+    if (cin.fail() || nuevaSensibilidad < 0 || (nuevaSensibilidad > 100 && nuevaSensibilidad != 200)) {
         cout << "Entrada invalida. La sensibilidad debe ser un numero entre 0 y 100." << endl;
         cin.clear();
         cin.ignore(1000, '\n');
@@ -108,10 +108,13 @@ void MenuSimulacion::ingresarEquiposManualmente(Simulador* simulador) const {
         stringstream ss;
         ss << id << "," << nombre << "," << criticidad << "," << enUso << "," << incidenciasActivas << "," << tiempoInactivo;
 
+        Equipo* nuevoEquipo = nullptr;
         try {
-            Equipo* nuevoEquipo = gestorArchivos.crearEquipo(tipo, ss.str());
+            nuevoEquipo = gestorArchivos.crearEquipo(tipo, ss.str());
             simulador->agregarEquipo(nuevoEquipo);
+            nuevoEquipo = nullptr; // ownership transferido al simulador
         } catch (const exception& e) {
+            delete nuevoEquipo;
             cerr << "Error al crear el equipo: " << e.what() << endl;
             i--;
         }

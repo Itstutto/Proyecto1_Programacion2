@@ -67,10 +67,4 @@ public:
 };
 
 
-inline void Simulador::setSensibilidadIncidencias(double nuevaSensibilidad) {
-    if (nuevaSensibilidad < 0 || nuevaSensibilidad > 1) {
-        throw ErrorArgumentoInvalido("La sensibilidad debe ser un numero entre 0 y 1");
-    }
-    incidencias->setSensibilidad(nuevaSensibilidad);
-}
 #endif //PROYECTO1_SIMULADOR_H

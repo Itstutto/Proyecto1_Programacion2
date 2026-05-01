@@ -38,11 +38,12 @@ string Camaras::toString() {
     ss << "Criticidad: " << getCriticidad() << endl;
     ss << "Prioridad: " << prioridad() << endl;
     ss << "Estado: " << estado << "% " << endl;
+    ss << (enUso ? "La camara esta en uso" : "La camara no esta en uso") << endl;
     return ss.str();
 }
 
 string Camaras::serializar() {
     stringstream ss;
-    ss << "Camaras," << id << "," << getNombre() << "," << getCriticidad() << "," << enUso << "," << getIncidenciasActivas() << "," << getTiempoInactivo() << endl;
+    ss << "Camara," << id << "," << getNombre() << "," << getCriticidad() << "," << enUso << "," << getIncidenciasActivas() << "," << getTiempoInactivo() << endl;
     return ss.str();
 }

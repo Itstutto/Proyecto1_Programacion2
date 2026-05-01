@@ -38,6 +38,7 @@ string AireAcondicionado::toString() {
     ss << "Criticidad: " << getCriticidad() << endl;
     ss << "Prioridad: " << prioridad() << endl;
     ss << "Estado: " << estado << "% " << endl;
+    ss << (enUso ? "El aire acondicionado esta en uso" : "El aire acondicionado no esta en uso") << endl;
     return ss.str();
 }
 

@@ -24,17 +24,20 @@ public:
 
     int getCant();
     int getTotalIncidencias();
+    int pendientesDeReparar();
 
     void agregarEquipo(Equipo* equipo);
     void eliminarEquipo(int id);
     Equipo* buscarEquipo(int id);
     Equipo* buscarEquipoIndice(int indice);
 
+    string riesgoGlobal();
     string mostrarEquipos();
     string mostrarEquiposLista();
     string serializar();
     string tresEquiposMasPrioritarios();
     string reporteTipoEquipo(string tipo);
+    string reporteFinal();
 
     void agregarEquipos(ContenedorEquipos* nuevoContenedor);
 

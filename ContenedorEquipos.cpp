@@ -3,7 +3,7 @@
 //
 
 #include "ContenedorEquipos.h"
-
+#include <iomanip>
 #include "Convertidor.h"
 #include "Convertidores.h"
 #include "ErrorNoEncontrado.h"
@@ -51,6 +51,16 @@ int ContenedorEquipos::getTotalIncidencias() {
     int total = 0;
     for (int i = 0; i < cant; i++) {
         total += equipos[i]->getIncidenciasActivas();
+    }
+    return total;
+}
+
+int ContenedorEquipos::pendientesDeReparar() {
+    int total = 0;
+    for (int i = 0; i < cant; i++) {
+        if (equipos[i]->getIncidenciasActivas() > 0) {
+            total++;
+        }
     }
     return total;
 }
@@ -122,6 +132,20 @@ Equipo * ContenedorEquipos::buscarEquipoIndice(int indice) {
     return equipos[indice];
 }
 
+string ContenedorEquipos::riesgoGlobal() {
+    double estadoTotal = 0;
+    string riesgoTotal;
+    for (int i = 0; i < cant; i++) {
+        estadoTotal += equipos[i]->getEstado();
+    }
+    double riesgo = 100 - (estadoTotal / cant);
+
+    riesgoTotal = (riesgo < 25) ? "Bajo" : (riesgo < 50) ? "Medio" : (riesgo < 75) ? "Alto" : "Critico";
+    stringstream ss;
+    ss<<"Estado global de los equipos: "<<setprecision(4)<<estadoTotal/cant<<"% - Riesgo global: "<<riesgoTotal<<endl;
+    return ss.str();
+}
+
 string ContenedorEquipos::mostrarEquipos() {
     stringstream ss;
     for (int i = 0; i < cant; i++) {
@@ -185,28 +209,57 @@ string ContenedorEquipos::reporteTipoEquipo(string tipo) {
     return ss.str();
 }
 
+string ContenedorEquipos::reporteFinal() {
+    stringstream ss;
+    ss<<"Reporte final de los equipos:"<<endl;
+    for (int i = 0; i < cant; i++) {
+        ss<<"Equipo #"<<i+1<<endl;
+        ss << equipos[i]->toString() << endl;
+        ss<<"----------------------------------------------"<<endl;
+    }
+    ss<<"Estado final: "<<endl
+    <<riesgoGlobal()<<endl;
+    ss<<"Cantidad de equipos sin atender: "<<endl
+    <<pendientesDeReparar()<<endl;
+
+    return ss.str();
+}
+
 void ContenedorEquipos::agregarEquipos(ContenedorEquipos *nuevoContenedor) {
     if (nuevoContenedor == nullptr) {
         throw ErrorPunteroNulo("El nuevo contenedor no puede ser nulo");
     }
-    //agregar equipos a contenedor ya existente
-    for (int i=0; i<nuevoContenedor->getCant(); i++) {
+    int agregados = 0;
+    int cantOriginal = nuevoContenedor->cant;
 
-        try {
-            agregarEquipo(nuevoContenedor->buscarEquipoIndice(i));
-        }catch (const ErrorRepetido& e) {
-            cout<<"El equipo "<<buscarEquipoIndice(i)->getNombre()<<" posee un ID ya utilizado, no se agrega"<<endl;//si esta repetido solo no se agrega
-        }catch (const ErrorEspacio& e) {
-            throw ErrorEspacio("No se pueden agregar mas equipos, el contenedor esta lleno, se han agredado "+to_string(i)+" equipos");
+    try {
+        // Mueve ownership equipo por equipo; en duplicados se libera el objeto descartado.
+        for (int i = 0; i < cantOriginal; i++) {
+            Equipo* equipo = nuevoContenedor->equipos[i];
+            if (!equipo) {
+                continue;
+            }
+
+            try {
+                agregarEquipo(equipo);
+                nuevoContenedor->equipos[i] = nullptr;
+                agregados++;
+            } catch (const ErrorRepetido&) {
+                cout << "El equipo " << equipo->getNombre() << " posee un ID ya utilizado, no se agrega" << endl;
+                delete equipo;
+                nuevoContenedor->equipos[i] = nullptr;
+            }
         }
+
+        nuevoContenedor->cant = 0;
+        delete nuevoContenedor;
+    } catch (const ErrorEspacio&) {
+        delete nuevoContenedor;
+        throw ErrorEspacio("No se pueden agregar mas equipos, el contenedor esta lleno, se han agregado " + to_string(agregados) + " equipos");
+    } catch (...) {
+        delete nuevoContenedor;
+        throw;
     }
-
-    nuevoContenedor->liberarContenedor();
-
-    //reiniciar el nuevo contenedor para evitar problemas de doble eliminacion
-    delete nuevoContenedor;
-
-    nuevoContenedor = nullptr;
 }
 
 
