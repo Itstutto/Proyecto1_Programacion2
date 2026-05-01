@@ -24,7 +24,7 @@
 using namespace std;
 
 int main() {
-    Simulador sim(30, 300, 0.1);
+    Simulador sim(30, 300, 2);
     Menu    menu;
     menu.menuPrincipal(&sim);
 
