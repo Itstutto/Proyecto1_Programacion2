@@ -23,6 +23,8 @@
 #include "ReporteEquipos.h"
 using namespace std;
 
+//Proyecto 1 de Programación 2 de César Segura y Fernanda Alfaro
+
 int main() {
     Simulador sim(30, 300, 2);
     Menu    menu;
